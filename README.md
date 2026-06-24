@@ -11,9 +11,9 @@ Pure HTML + CSS + vanilla JS. No backend, no build step — deploy the folder as
 ## ⚙️ Before going live — edit these
 1. **Contact details** — top of `script.js`, the `CONFIG` object:
    ```js
-   phone: '+639170000000',   // real tap-to-call number
-   messenger: 'https://m.me/dgtechandload',
-   whatsapp: '639170000000', // digits only, country code, no +
+   phone: '+639067571561',   // real tap-to-call number
+   messenger: 'https://www.facebook.com/dandgtechandload',
+   whatsapp: '639937338509', // digits only, country code, no +
    ```
 2. **Products** — edit the `products` array in `script.js`.
 3. **Google Map** — in `index.html`, replace the `<iframe src="…">` with your exact
