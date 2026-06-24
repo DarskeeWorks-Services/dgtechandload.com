@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 
 const PORT = process.env.PORT || 3000;
-const ROOT = __dirname;
+const ROOT = path.join(__dirname, 'docs'); // site files live in docs/ (also the GitHub Pages source folder)
 const MIME = {
   '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript',
   '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png',
