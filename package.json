@@ -1,0 +1,12 @@
+{
+  "name": "dg-tech-and-load",
+  "version": "1.0.0",
+  "description": "Futuristic mobile-first website for D&G Tech & Load — Buenavista, Bohol.",
+  "private": true,
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js"
+  },
+  "keywords": ["dg-tech-and-load", "static-site", "bohol"],
+  "license": "MIT"
+}
