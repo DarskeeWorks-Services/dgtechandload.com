@@ -1,0 +1,29 @@
+{
+  "_instructions": "HOW TO ADD A PROMO / NEWS POST:  1) Put the image file in this folder (docs/assets/promos/).  2) Add an entry to the 'promos' list below.  Fields: title (text), type ('product' | 'store' | 'news'), image (filename in this folder e.g. 'mypromo.jpg', OR a full https:// URL), date ('YYYY-MM-DD'), text (description), cta (optional button label). Newest dates show first. Delete the sample entries once you add your own.",
+  "promos": [
+    {
+      "title": "₱500 OFF Selected Smartphones",
+      "type": "product",
+      "image": "promo-sample-1.jpg",
+      "date": "2026-06-25",
+      "text": "Grab ₱500 off on selected Infinix, Realme and Xiaomi units this month. Limited stocks available — message us to reserve yours today!",
+      "cta": "Message to avail"
+    },
+    {
+      "title": "Grand Opening Weekend Sale",
+      "type": "store",
+      "image": "promo-sample-2.jpg",
+      "date": "2026-06-20",
+      "text": "Celebrate with us! Enjoy freebies on every accessory purchase and free screen protector installation all weekend long at D&G Tech & Load.",
+      "cta": "Get directions"
+    },
+    {
+      "title": "Now Offering GCash Cash-In / Cash-Out",
+      "type": "news",
+      "image": "promo-sample-3.jpg",
+      "date": "2026-06-15",
+      "text": "Great news! D&G Tech & Load now handles GCash cash-in and cash-out, plus E-Load for all networks and SIM registration assistance. Drop by anytime!",
+      "cta": "Message us"
+    }
+  ]
+}
