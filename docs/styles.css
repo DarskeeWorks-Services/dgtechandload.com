@@ -249,6 +249,16 @@ input, select, textarea { font-family: inherit; font-size: 1rem; }
 .product-card__price { font-family: 'Orbitron', sans-serif; font-weight: 700; color: var(--orange); font-size: 1.15rem; }
 .product-card__hint { margin-top: auto; font-size: .78rem; color: var(--muted); }
 .catalog-empty { text-align: center; color: var(--muted); padding: 40px 0; }
+.catalog-loading { grid-column: 1 / -1; text-align: center; color: var(--muted); padding: 40px 0; }
+
+/* live stock badge (auto-updates from Supabase inventory) */
+.stock { display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; font-size: .74rem; font-weight: 600; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line); }
+.stock::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: currentColor; box-shadow: 0 0 8px currentColor; }
+.stock--in { color: #25D366; background: rgba(37,211,102,.08); }
+.stock--low { color: var(--orange); background: rgba(255,140,0,.1); }
+.stock--out { color: #ff6b6b; background: rgba(255,107,107,.1); }
+.product-card--out { opacity: .6; }
+.product-card--out .product-card__price { color: var(--muted); }
 
 /* ---------- BRANDS ---------- */
 .brands-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 16px; }

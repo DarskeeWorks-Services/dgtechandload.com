@@ -35,18 +35,41 @@
     { icon: '🎧', name: 'Earbuds & Smartwatch', desc: 'Wireless audio and smart wearables.' }
   ];
 
-  const products = [
-    { name: 'iPhone 13', price: '₱28,999', category: 'Phones', icon: '📱', desc: '6.1" Super Retina XDR, A15 Bionic, dual-camera. Genuine unit with warranty.' },
-    { name: 'Samsung Galaxy A55', price: '₱22,499', category: 'Phones', icon: '📱', desc: '5G, 120Hz AMOLED, 50MP OIS camera. Sealed brand-new.' },
-    { name: 'Xiaomi Redmi Note 13', price: '₱9,999', category: 'Phones', icon: '📱', desc: '108MP camera, big battery, smooth performance for the price.' },
-    { name: 'Realme C67', price: '₱8,499', category: 'Phones', icon: '📱', desc: 'Sleek design, 5000mAh battery, fast charging.' },
-    { name: 'AirPods Pro (2nd Gen)', price: '₱2,999', category: 'Accessories', icon: '🎧', desc: 'Active noise cancellation, USB-C, immersive sound.' },
-    { name: '20,000mAh Power Bank', price: '₱899', category: 'Accessories', icon: '🔋', desc: 'Fast-charge dual-port power bank for travel and daily use.' },
-    { name: 'Smartwatch GT5', price: '₱1,499', category: 'Accessories', icon: '⌚', desc: 'Heart-rate, SpO2, calls and notifications on your wrist.' },
-    { name: '65W Fast Charger Set', price: '₱649', category: 'Accessories', icon: '🔌', desc: 'Super-fast adapter with braided USB-C cable.' },
-    { name: 'Wireless Earbuds Lite', price: '₱599', category: 'Accessories', icon: '🎧', desc: 'Crisp sound, long battery, comfortable fit.' },
-    { name: 'Tempered Glass Protector', price: '₱149', category: 'Accessories', icon: '🛡️', desc: '9H hardness screen protection. Fits most models.' }
-  ];
+  /* -------- SUPABASE (live product catalog) --------
+     Reads the public, read-only `store_catalog` view (name, price, remaining).
+     The anon/publishable key is safe to expose; it is protected by RLS and the
+     view only exposes name + SRP + remaining stock (no cost data). */
+  const SUPABASE = {
+    url: 'https://leffsoksckthixhbtuue.supabase.co',
+    key: 'sb_publishable_RI4BHhu8LnLJdeXFlBq_Xg_2FslH7qP',
+    view: 'store_catalog',
+    refreshMs: 30000 // auto-refresh remaining stock every 30s
+  };
+
+  // Products are loaded live from Supabase at runtime.
+  let products = [];
+
+  /* Derive a friendly category + icon from the product name (the catalog
+     stores only name + price, so we group client-side for nicer browsing). */
+  function deriveCategory(name) {
+    const n = name.toLowerCase();
+    if (/\bsim\b|sim card/.test(n)) return 'SIM Cards';
+    if (/phone|iphone|samsung|vivo|oppo|realme|xiaomi|redmi|tecno|infinix|cellphone/.test(n)) return 'Phones';
+    if (/charger|cable|adapter|type ?c|micro|usb|lightning/.test(n)) return 'Chargers & Cables';
+    if (/earbud|headset|earphone|speaker|airpod|audio|tws/.test(n)) return 'Audio';
+    if (/watch|smartwatch/.test(n)) return 'Smartwatches';
+    if (/glass|tempered|case|cover|holder|pouch|protector/.test(n)) return 'Cases & Glass';
+    if (/power ?bank|powerbank|battery/.test(n)) return 'Power Banks';
+    return 'Accessories';
+  }
+  function deriveIcon(category) {
+    return {
+      'SIM Cards': '📇', 'Phones': '📱', 'Chargers & Cables': '🔌',
+      'Audio': '🎧', 'Smartwatches': '⌚', 'Cases & Glass': '🛡️',
+      'Power Banks': '🔋', 'Accessories': '🎒'
+    }[category] || '🛍️';
+  }
+  const peso = (v) => '₱' + Number(v).toLocaleString('en-PH');
 
   const whyChoose = [
     { icon: '🎓', title: 'Certified Technicians', desc: 'Trained pros who know every brand inside out.' },
@@ -156,22 +179,29 @@
     });
   }
 
-  function renderProducts() {
+  function stockBadge(remaining) {
+    if (remaining <= 0) return '<span class="stock stock--out">Out of stock</span>';
+    if (remaining <= 3) return `<span class="stock stock--low">Only ${remaining} left</span>`;
+    return `<span class="stock stock--in">${remaining} in stock</span>`;
+  }
+
+  function renderProducts(animate = true) {
     const list = products.filter((p) => {
       const matchCat = activeCat === 'All' || p.category === activeCat;
       const matchSearch = p.name.toLowerCase().includes(searchTerm) || p.category.toLowerCase().includes(searchTerm);
       return matchCat && matchSearch;
     });
 
-    $('#catalogEmpty').hidden = list.length !== 0;
+    $('#catalogEmpty').hidden = list.length !== 0 || products.length === 0;
     $('#productsGrid').innerHTML = list.map((p) => {
       const idx = products.indexOf(p);
       return `
-        <article class="product-card reveal" data-idx="${idx}" tabindex="0" role="button" aria-label="View ${esc(p.name)}">
+        <article class="product-card reveal${p.remaining <= 0 ? ' product-card--out' : ''}" data-idx="${idx}" tabindex="0" role="button" aria-label="View ${esc(p.name)}">
           <div class="product-card__media">${p.icon}<span class="product-card__cat">${esc(p.category)}</span></div>
           <div class="product-card__body">
             <h3 class="product-card__name">${esc(p.name)}</h3>
             <p class="product-card__price">${esc(p.price)}</p>
+            ${stockBadge(p.remaining)}
             <p class="product-card__hint">Tap to view &amp; inquire →</p>
           </div>
         </article>`;
@@ -182,24 +212,34 @@
       card.addEventListener('click', open);
       card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
     });
-    revealObserve();
+    // On background refreshes, show cards immediately (no re-fade flicker).
+    if (!animate) $$('#productsGrid .product-card').forEach((c) => c.classList.add('in'));
+    else revealObserve();
   }
 
   /* Modal */
   const modal = $('#productModal');
+  let openName = null; // track the product shown, so refreshes can update its stock
+  function fillModalStock(p) {
+    $('#modalDesc').innerHTML = p.remaining > 0
+      ? `Available now — <strong>${p.remaining} in stock</strong> at the store.`
+      : 'Currently <strong>out of stock</strong> — message us to check restock.';
+  }
   function openModal(p) {
+    if (!p) return;
+    openName = p.name;
     $('#modalImage').textContent = p.icon;
     $('#modalCat').textContent = p.category;
     $('#modalName').textContent = p.name;
     $('#modalPrice').textContent = p.price;
-    $('#modalDesc').textContent = p.desc || '';
+    fillModalStock(p);
     $('#modalMsgr').href = msgrInquiry(p.name);
     $('#modalWa').href = waInquiry(p.name);
     $('#modalCall').href = 'tel:' + CONFIG.phone;
     modal.hidden = false;
     document.body.style.overflow = 'hidden';
   }
-  function closeModal() { modal.hidden = true; document.body.style.overflow = ''; }
+  function closeModal() { modal.hidden = true; openName = null; document.body.style.overflow = ''; }
   modal.addEventListener('click', (e) => { if (e.target.hasAttribute('data-close')) closeModal(); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modal.hidden) closeModal(); });
 
@@ -303,6 +343,60 @@
   }
 
   /* =====================================================
+     LIVE CATALOG — fetch from Supabase + auto-refresh stock
+     ===================================================== */
+  async function fetchProducts() {
+    const url = `${SUPABASE.url}/rest/v1/${SUPABASE.view}` +
+      `?select=name,price,remaining&order=remaining.desc,name.asc`;
+    const res = await fetch(url, {
+      headers: { apikey: SUPABASE.key, Authorization: `Bearer ${SUPABASE.key}` }
+    });
+    if (!res.ok) throw new Error(`Supabase ${res.status}`);
+    const rows = await res.json();
+    return rows.map((r) => {
+      const category = deriveCategory(r.name);
+      return {
+        name: r.name,
+        price: peso(r.price),
+        remaining: Math.max(0, Number(r.remaining) || 0),
+        category,
+        icon: deriveIcon(category)
+      };
+    });
+  }
+
+  async function loadCatalog(isRefresh) {
+    try {
+      const next = await fetchProducts();
+      if (!next.length) throw new Error('empty');
+      products = next;
+      renderFilters();
+      renderProducts(!isRefresh);
+      // keep an open modal's stock in sync with the latest record
+      if (openName) {
+        const p = products.find((x) => x.name === openName);
+        if (p) { $('#modalPrice').textContent = p.price; fillModalStock(p); }
+      }
+    } catch (err) {
+      if (!products.length) {
+        $('#productsGrid').innerHTML = '';
+        const empty = $('#catalogEmpty');
+        empty.hidden = false;
+        empty.textContent = 'Unable to load products right now. Please try again later or message us directly.';
+      }
+      // on a background refresh failure, silently keep the current list
+    }
+  }
+
+  function startCatalog() {
+    $('#productsGrid').innerHTML = '<p class="catalog-loading">Loading products…</p>';
+    loadCatalog(false);
+    // auto-update remaining quantity from the inventory record
+    setInterval(() => { if (!document.hidden) loadCatalog(true); }, SUPABASE.refreshMs);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) loadCatalog(true); });
+  }
+
+  /* =====================================================
      APPLY CONFIG TO STATIC LINKS
      ===================================================== */
   function applyConfigLinks() {
@@ -319,11 +413,10 @@
     renderWhy();
     renderTestimonials();
     renderFaq();
-    renderFilters();
-    renderProducts();
+    startCatalog(); // loads products from Supabase + auto-refreshes stock
 
     const search = $('#productSearch');
-    search.addEventListener('input', () => { searchTerm = search.value.trim().toLowerCase(); renderProducts(); });
+    search.addEventListener('input', () => { searchTerm = search.value.trim().toLowerCase(); renderProducts(false); });
 
     applyConfigLinks();
     bindForm();
