@@ -71,6 +71,14 @@
   }
   const peso = (v) => '₱' + Number(v).toLocaleString('en-PH');
 
+  // Resolve a product photo: full URL as-is, otherwise a file in the
+  // public 'product-images' bucket. Returns null when no photo is set.
+  function resolveImg(image) {
+    if (!image) return null;
+    if (/^https?:\/\//i.test(image)) return image;
+    return `${SUPABASE.url}/storage/v1/object/public/product-images/${encodeURIComponent(image)}`;
+  }
+
   const whyChoose = [
     { icon: '🎓', title: 'Certified Technicians', desc: 'Trained pros who know every brand inside out.' },
     { icon: '💰', title: 'Affordable Pricing', desc: 'Honest, competitive rates with no surprises.' },
@@ -197,7 +205,11 @@
       const idx = products.indexOf(p);
       return `
         <article class="product-card reveal${p.remaining <= 0 ? ' product-card--out' : ''}" data-idx="${idx}" tabindex="0" role="button" aria-label="View ${esc(p.name)}">
-          <div class="product-card__media">${p.icon}<span class="product-card__cat">${esc(p.category)}</span></div>
+          <div class="product-card__media">
+            <span class="product-card__icon">${p.icon}</span>
+            ${p.img ? `<img class="product-card__img" src="${esc(p.img)}" alt="${esc(p.name)}" loading="lazy" onerror="this.remove()">` : ''}
+            <span class="product-card__cat">${esc(p.category)}</span>
+          </div>
           <div class="product-card__body">
             <h3 class="product-card__name">${esc(p.name)}</h3>
             <p class="product-card__price">${esc(p.price)}</p>
@@ -228,7 +240,9 @@
   function openModal(p) {
     if (!p) return;
     openName = p.name;
-    $('#modalImage').textContent = p.icon;
+    $('#modalImage').innerHTML = p.img
+      ? `<span class="modal__icon">${p.icon}</span><img class="modal__img" src="${esc(p.img)}" alt="${esc(p.name)}" onerror="this.remove()">`
+      : p.icon;
     $('#modalCat').textContent = p.category;
     $('#modalName').textContent = p.name;
     $('#modalPrice').textContent = p.price;
@@ -347,7 +361,7 @@
      ===================================================== */
   async function fetchProducts() {
     const url = `${SUPABASE.url}/rest/v1/${SUPABASE.view}` +
-      `?select=name,price,remaining&order=remaining.desc,name.asc`;
+      `?select=name,price,remaining,image&order=remaining.desc,name.asc`;
     const res = await fetch(url, {
       headers: { apikey: SUPABASE.key, Authorization: `Bearer ${SUPABASE.key}` }
     });
@@ -360,7 +374,8 @@
         price: peso(r.price),
         remaining: Math.max(0, Number(r.remaining) || 0),
         category,
-        icon: deriveIcon(category)
+        icon: deriveIcon(category),
+        img: resolveImg(r.image)
       };
     });
   }
