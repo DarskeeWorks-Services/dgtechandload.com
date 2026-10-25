@@ -917,7 +917,8 @@
       "name": "K1000 KEYBOARD",
       "category": "Computer Accessories",
       "price": 350,
-      "stock": 1
+      "stock": 1,
+      "image": "k1000-keyboard.webp"
     },
     {
       "name": "MOUSEPAD",
