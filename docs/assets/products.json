@@ -469,7 +469,8 @@
       "name": "CASE I -16 PRO",
       "category": "Cases & Screen Protectors",
       "price": 200,
-      "stock": 1
+      "stock": 1,
+      "image": "case-i-16-pro.webp"
     },
     {
       "name": "CASE I-XR",
