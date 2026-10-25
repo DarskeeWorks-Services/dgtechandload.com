@@ -595,7 +595,8 @@
       "name": "CASE S1 PRO",
       "category": "Cases & Screen Protectors",
       "price": 200,
-      "stock": 5
+      "stock": 5,
+      "image": "case-s1-pro.webp"
     },
     {
       "name": "CASE SAM A11",
