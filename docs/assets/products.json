@@ -104,7 +104,8 @@
       "name": "BISEN 676 CHARGER 5G",
       "category": "Chargers & Cables",
       "price": 250,
-      "stock": 4
+      "stock": 4,
+      "image": "bisen-676-charger-5g.webp"
     },
     {
       "name": "BISEN 676 CHARGER TC",
