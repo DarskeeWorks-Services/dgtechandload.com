@@ -310,7 +310,8 @@
       "name": "ALI BT250 HEADSET",
       "category": "Audio",
       "price": 680,
-      "stock": 1
+      "stock": 1,
+      "image": "ali-bt250-headset.webp"
     },
     {
       "name": "B-BTS 2409",
