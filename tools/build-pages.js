@@ -105,7 +105,7 @@ const footer = (page) => `<footer class="footer">
       <div class="footer__inner">
         ${brand('brand--footer')}
         <nav class="footer__links" aria-label="Footer">
-${NAV.map(([id, href, label]) => `          <a href="${href}"${id === page ? ' class="active"' : ''}>${label}</a>`).join('\n')}
+${[...NAV, ['partners', 'partners.html', 'Partners']].map(([id, href, label]) => `          <a href="${href}"${id === page ? ' class="active"' : ''}>${label}</a>`).join('\n')}
         </nav>
         <div class="socials">
           <a href="${FB}" target="_blank" rel="noopener" aria-label="D and G Tech &amp; Load on Facebook">${ic('facebook')}</a>
@@ -162,6 +162,11 @@ const shopeeBanner = `<a class="shopee-banner reveal" href="${SHOPEE}" data-shop
           <span class="shopee-banner__text"><strong>Prefer to order online?</strong> Shop our store on Shopee — delivered to your door.</span>
           <span class="btn btn--shopee btn--sm">Shop on Shopee ${ic('arrow')}</span>
         </a>`;
+
+// Sponsored placement (one ad, rotated) — hidden until an active ad exists for this placement
+const adSlot = (place) => `<div class="ad-slot" data-partners-wrap hidden><div data-partners="ad-${place}"></div></div>`;
+
+const ADVERTISE_MSG = MSGR + '?text=' + encodeURIComponent('Hi D&G Tech & Load! I am interested in sponsoring / advertising on your website.');
 
 const storeInfo = `<ul class="info-list">
             <li>${ic('pin')}<div>${ADDRESS_HTML}</div></li>
@@ -228,6 +233,7 @@ PAGES.home = {
         </div>
         <div class="home-products" id="homeProducts"><!-- injected by script.js --></div>
         ${shopeeBanner}
+        ${adSlot('home')}
       </div>
     </section>
 
@@ -236,6 +242,21 @@ PAGES.home = {
       <div class="container">
         <h2 class="section-title" style="margin-bottom:20px">Brands We Carry</h2>
         ${brandsRow}
+      </div>
+    </section>
+
+    <!-- PARTNERS & SPONSORS (assets/partners.json; hidden while empty) -->
+    <section class="section section--tight" data-partners-wrap hidden>
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">Partners &amp; Sponsors</h2>
+            <p class="section-sub">Businesses and organizations we work with.</p>
+          </div>
+          <a class="link-more" href="partners.html">See all ${ic('arrow')}</a>
+        </div>
+        <div data-partners-wrap hidden><h3 class="partner-sub">Sponsors</h3><div class="partner-logos" data-partners="sponsors"></div></div>
+        <div data-partners-wrap hidden><h3 class="partner-sub">Affiliations</h3><div class="partner-logos" data-partners="affiliations"></div></div>
       </div>
     </section>
 
@@ -344,6 +365,7 @@ PAGES.products = {
           </div>
           <div class="filter-chips" id="filterChips" role="group" aria-label="Filter by category"><!-- injected by script.js --></div>
         </div>
+        ${adSlot('products')}
         <p class="sr-only" id="catalogStatus" role="status" aria-live="polite"></p>
         <div class="products-grid" id="productsGrid"><!-- injected by script.js --></div>
         <div class="catalog-empty" id="catalogEmpty" hidden>
@@ -431,6 +453,52 @@ PAGES.about = {
             ${storeInfo}
             ${storeButtons}
           </div>
+        </div>
+      </div>
+    </section>`
+};
+
+PAGES.partners = {
+  file: 'partners.html',
+  title: 'Partners &amp; Sponsors — D&amp;G Tech &amp; Load | Buenavista, Bohol',
+  desc: 'Sponsors, affiliations and partners of D&amp;G Tech &amp; Load in Buenavista, Bohol — plus how to sponsor or advertise with us.',
+  canonical: 'partners.html',
+  main: pageHead('Partners &amp; Sponsors', 'The businesses, brands and organizations we work with.') + `
+    <section class="section" style="padding-top:0">
+      <div class="container">
+        <p class="catalog-empty" id="partnersEmpty" hidden>Our partner list is coming soon.</p>
+
+        <div class="partner-block" data-partners-wrap hidden>
+          <h2 class="section-title">Sponsors</h2>
+          <div class="partner-logos partner-logos--lg" data-partners="sponsors"></div>
+        </div>
+
+        <div class="partner-block" data-partners-wrap hidden>
+          <h2 class="section-title">Affiliations</h2>
+          <div class="partner-logos partner-logos--lg" data-partners="affiliations"></div>
+        </div>
+
+        <div class="partner-block" data-partners-wrap hidden>
+          <h2 class="section-title">From Our Sponsors</h2>
+          <div class="ad-list" data-partners="ads"></div>
+        </div>
+
+        <div class="partner-block" data-partners-wrap hidden>
+          <h2 class="section-title">Recommended Picks</h2>
+          <p class="disclosure">${ic('info')} These are affiliate links: if you buy through them, we may earn a small commission at no extra cost to you.</p>
+          <div class="aff-grid" data-partners="affiliates"></div>
+        </div>
+
+        <div class="cta-banner reveal">
+          <div class="cta-banner__text">
+            <h2>Sponsor or advertise with D&amp;G Tech &amp; Load</h2>
+            <p class="section-sub" style="margin:-6px 0 16px">Reach customers in Buenavista through our store and website. Message us to talk about sponsorships, ads and partnerships.</p>
+            <div class="btn-row" style="max-width:420px">
+              <a class="btn btn--orange" href="${ADVERTISE_MSG}" target="_blank" rel="noopener">${ic('messenger')} Message Us</a>
+              <a class="btn btn--ghost" href="tel:${PHONE}">${ic('call')} Call Us</a>
+            </div>
+          </div>
+          <div class="cta-banner__art"><img src="assets/hero-devices.svg" alt="" loading="lazy" width="640" height="520"></div>
         </div>
       </div>
     </section>`

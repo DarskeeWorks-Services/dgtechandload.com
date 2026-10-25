@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow, noarchive" />
+<meta name="referrer" content="no-referrer" />
+<title>D&amp;G Admin</title>
+<link rel="icon" type="image/png" href="assets/favicon.png" />
+<!--
+  D&G TECH & LOAD — site admin (unlisted page).
+  This file contains NO secrets. Saving requires a GitHub access token with write access to the
+  repository; the token is entered by the owner and kept only in this browser. Each save commits
+  the change to GitHub and GitHub Pages publishes it in about a minute.
+-->
+<style>
+  :root { --blue:#087CFF; --orange:#FF9810; --bg:#050914; --card:#0C1C30; --line:#1d3a63; --muted:#A9B8CC; --ok:#25D366; --bad:#ff6b6b; color-scheme: dark; }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  code { word-break: break-all; }
+  body { margin: 0; font: 15px/1.5 system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: #fff; }
+  a { color: var(--blue); }
+  header { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: 12px; padding: 10px 16px; background: rgba(5,9,20,.95); border-bottom: 1px solid var(--line); }
+  header img { height: 34px; border-radius: 5px; }
+  header h1 { font-size: 1rem; margin: 0; flex: 1; }
+  header .who { font-size: .8rem; color: var(--muted); }
+  main { max-width: 1000px; margin: 0 auto; padding: 16px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px; margin-bottom: 16px; }
+  h2 { margin: 0 0 6px; font-size: 1.2rem; }
+  p.muted, .muted { color: var(--muted); font-size: .88rem; }
+  label { display: block; font-size: .82rem; font-weight: 600; margin: 10px 0 4px; }
+  input, select, textarea { width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--line); background: #071426; color: #fff; font: inherit; }
+  textarea { min-height: 80px; resize: vertical; }
+  input[type=checkbox] { width: auto; }
+  input:focus, select:focus, textarea:focus { outline: 2px solid var(--blue); outline-offset: 1px; }
+  button, .btn { display: inline-flex; align-items: center; gap: 6px; padding: 9px 16px; border-radius: 8px; border: 1px solid transparent; font: inherit; font-weight: 600; cursor: pointer; background: var(--blue); color: #fff; text-decoration: none; }
+  button.secondary { background: transparent; border-color: var(--line); }
+  button.danger { background: transparent; border-color: #6b2b2b; color: var(--bad); }
+  button.orange { background: var(--orange); color: #000; }
+  button:disabled { opacity: .5; cursor: wait; }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 14px; }
+  @media (max-width: 640px) { .grid2 { grid-template-columns: 1fr; } }
+  nav.tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+  nav.tabs button { background: var(--card); border-color: var(--line); font-weight: 500; }
+  nav.tabs button.on { background: var(--blue); border-color: var(--blue); }
+  .item { display: flex; gap: 12px; align-items: center; padding: 10px; border: 1px solid var(--line); border-radius: 10px; margin-bottom: 8px; background: #081629; }
+  .item img, .item .ph { width: 64px; height: 64px; border-radius: 8px; object-fit: cover; background: #0a1a33; flex-shrink: 0; display: grid; place-items: center; color: var(--muted); font-size: .7rem; text-align: center; }
+  .item .info { flex: 1; min-width: 0; }
+  .item .info strong { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .item .info small { color: var(--muted); }
+  .badge { display: inline-block; font-size: .68rem; font-weight: 700; padding: 1px 7px; border-radius: 999px; margin-left: 6px; vertical-align: 2px; }
+  .badge.active { background: rgba(37,211,102,.15); color: var(--ok); }
+  .badge.scheduled { background: rgba(8,124,255,.18); color: #7db8ff; }
+  .badge.expired { background: rgba(255,107,107,.15); color: var(--bad); }
+  .empty { color: var(--muted); padding: 18px; text-align: center; border: 1px dashed var(--line); border-radius: 10px; }
+  .preview { margin-top: 8px; max-width: 220px; border-radius: 8px; display: block; }
+  #toast { position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); z-index: 50; max-width: 92vw; padding: 12px 18px; border-radius: 10px; background: #0f2a4a; border: 1px solid var(--blue); box-shadow: 0 10px 30px rgba(0,0,0,.5); display: none; }
+  #toast.err { border-color: var(--bad); background: #3a1414; }
+  dialog { width: min(640px, 94vw); max-height: 90vh; background: var(--card); color: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
+  dialog::backdrop { background: rgba(0,0,0,.7); }
+  .steps { margin: 8px 0 0; padding-left: 20px; color: var(--muted); font-size: .88rem; }
+  .steps li { margin-bottom: 4px; }
+  .filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+  .filters input { flex: 1; min-width: 180px; }
+  .hint { font-size: .78rem; color: var(--muted); margin-top: 3px; }
+</style>
+</head>
+<body>
+<header>
+  <img src="assets/dg-mark.webp" alt="" />
+  <h1>D&amp;G Tech &amp; Load — Admin</h1>
+  <span class="who" id="who"></span>
+  <button class="secondary" id="logoutBtn" hidden>Disconnect</button>
+</header>
+
+<main>
+  <!-- CONNECT -->
+  <section class="card" id="connectCard">
+    <h2>Connect to GitHub</h2>
+    <p class="muted">This page edits the live website by saving changes to its GitHub repository. Enter a GitHub access token that has write access to <code>DarskeeWorks-Services/dgtechandload.com</code>. The token stays in this browser only and is never put into the website.</p>
+    <label for="token">GitHub access token</label>
+    <input id="token" type="password" autocomplete="off" placeholder="github_pat_…" />
+    <div class="row" style="margin-top:10px">
+      <label class="row" style="margin:0;font-weight:500"><input type="checkbox" id="remember" /> Remember on this device</label>
+    </div>
+    <div class="row" style="margin-top:14px"><button id="connectBtn">Connect</button></div>
+    <details style="margin-top:14px">
+      <summary class="muted">How do I get a token?</summary>
+      <ol class="steps">
+        <li>Open <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GitHub → Settings → Developer settings → Fine-grained tokens → Generate new token</a>.</li>
+        <li>Resource owner: <b>DarskeeWorks-Services</b>. Expiration: 90 days (or your choice).</li>
+        <li>Repository access: <b>Only select repositories</b> → <b>dgtechandload.com</b>.</li>
+        <li>Permissions → Repository permissions → <b>Contents: Read and write</b>. Nothing else is needed.</li>
+        <li>Generate, copy the token, and paste it above. Treat it like a password.</li>
+      </ol>
+      <p class="muted">Only tick "Remember" on your own phone/computer. Anyone with the token can change the website — if it leaks, delete it on GitHub and make a new one.</p>
+    </details>
+  </section>
+
+  <!-- APP -->
+  <section id="app" hidden>
+    <nav class="tabs" id="tabs"></nav>
+    <div id="panel"></div>
+    <p class="muted" style="margin-top:20px">Changes go live on <a href="./" target="_blank" rel="noopener">the website</a> about a minute after saving. Only add real offers, partners and ads — sponsored ads are labelled "Sponsored" and affiliate links show a commission notice automatically.</p>
+  </section>
+</main>
+
+<dialog id="editor"><form id="editorForm" method="dialog"></form></dialog>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  const REPO = { owner: 'DarskeeWorks-Services', repo: 'dgtechandload.com', branch: 'main' };
+  const API = `https://api.github.com/repos/${REPO.owner}/${REPO.repo}`;
+
+  /* ---------- what can be edited ---------- */
+  const today = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
+  const COLLECTIONS = {
+    promos: {
+      label: 'Promos', file: 'docs/assets/promos/promos.json', key: 'promos', folder: 'docs/assets/promos', publicDir: 'assets/promos',
+      intro: 'Offers and store news shown on the Promos page (the 2 newest also appear on the home page). Promos hide automatically outside their start/end dates.',
+      titleKey: 'title', imageKey: 'image', imgMax: 1600,
+      fields: [
+        { k: 'title', label: 'Title', type: 'text', req: true, ph: 'e.g. 20% off all tempered glass' },
+        { k: 'type', label: 'Type', type: 'select', options: [['product', 'Product promo'], ['store', 'Store promo'], ['news', 'News & update']] },
+        { k: 'text', label: 'Details', type: 'textarea', ph: 'What is the offer? Any conditions?' },
+        { k: 'image', label: 'Image (optional)', type: 'image' },
+        { k: 'date', label: 'Posted on', type: 'date', def: today },
+        { k: 'cta', label: 'Button label (optional)', type: 'text', ph: 'Message to avail' },
+        { k: 'validFrom', label: 'Starts (optional)', type: 'date' },
+        { k: 'validUntil', label: 'Ends (optional)', type: 'date' }
+      ]
+    },
+    sponsors: {
+      label: 'Sponsors', file: 'docs/assets/partners.json', key: 'sponsors', folder: 'docs/assets/partners', publicDir: 'assets/partners',
+      intro: 'Businesses or brands that sponsor your store. Shown as logos on the home page and the Partners page.',
+      titleKey: 'name', imageKey: 'logo', imgMax: 600,
+      fields: [
+        { k: 'name', label: 'Sponsor name', type: 'text', req: true },
+        { k: 'logo', label: 'Logo (optional)', type: 'image' },
+        { k: 'url', label: 'Website / page link (optional)', type: 'url' },
+        { k: 'note', label: 'Short note (optional)', type: 'text', ph: 'e.g. Official sponsor 2026' },
+        { k: 'validFrom', label: 'Show from (optional)', type: 'date' },
+        { k: 'validUntil', label: 'Show until (optional)', type: 'date' }
+      ]
+    },
+    affiliations: {
+      label: 'Affiliations', file: 'docs/assets/partners.json', key: 'affiliations', folder: 'docs/assets/partners', publicDir: 'assets/partners',
+      intro: 'Official partnerships and memberships — e.g. authorized retailer or outlet programs you actually belong to.',
+      titleKey: 'name', imageKey: 'logo', imgMax: 600,
+      fields: [
+        { k: 'name', label: 'Name', type: 'text', req: true, ph: 'e.g. Authorized Retailer of …' },
+        { k: 'logo', label: 'Logo / badge (optional)', type: 'image' },
+        { k: 'url', label: 'Link (optional)', type: 'url' },
+        { k: 'note', label: 'Short note (optional)', type: 'text' }
+      ]
+    },
+    ads: {
+      label: 'Sponsored ads', file: 'docs/assets/partners.json', key: 'ads', folder: 'docs/assets/partners', publicDir: 'assets/partners',
+      intro: 'Paid ad placements for other businesses (monetization). Always shown with a "Sponsored" label. One ad is shown per placement, rotated on each visit.',
+      titleKey: 'title', imageKey: 'image', imgMax: 1200,
+      fields: [
+        { k: 'title', label: 'Ad headline', type: 'text', req: true },
+        { k: 'advertiser', label: 'Advertiser name', type: 'text', req: true },
+        { k: 'text', label: 'Ad text (optional)', type: 'textarea' },
+        { k: 'image', label: 'Ad image (optional)', type: 'image' },
+        { k: 'url', label: 'Link when clicked (optional)', type: 'url' },
+        { k: 'placement', label: 'Where to show', type: 'select', options: [['all', 'Home + Products pages'], ['home', 'Home page only'], ['products', 'Products page only']] },
+        { k: 'validFrom', label: 'Start date (optional)', type: 'date' },
+        { k: 'validUntil', label: 'End date (optional)', type: 'date', hint: 'Set this to the last paid day — the ad disappears automatically after it.' }
+      ]
+    },
+    affiliates: {
+      label: 'Affiliate links', file: 'docs/assets/partners.json', key: 'affiliates', folder: 'docs/assets/partners', publicDir: 'assets/partners',
+      intro: 'Affiliate links you earn commission from (e.g. Shopee or Lazada affiliate). Shown under "Recommended Picks" on the Partners page with a commission notice.',
+      titleKey: 'title', imageKey: 'image', imgMax: 800,
+      fields: [
+        { k: 'title', label: 'Product / offer name', type: 'text', req: true },
+        { k: 'url', label: 'Affiliate link', type: 'url', req: true },
+        { k: 'network', label: 'Shop name (optional)', type: 'text', ph: 'Shopee' },
+        { k: 'text', label: 'Short description (optional)', type: 'text' },
+        { k: 'image', label: 'Image (optional)', type: 'image' }
+      ]
+    }
+  };
+  const TABS = [['promos', 'Promos'], ['sponsors', 'Sponsors'], ['affiliations', 'Affiliations'], ['ads', 'Sponsored ads'], ['affiliates', 'Affiliate links'], ['photos', 'Product photos']];
+  const PRODUCTS_FILE = 'docs/assets/products.json';
+
+  /* ---------- helpers ---------- */
+  const $ = (s, c = document) => c.querySelector(s);
+  const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const slug = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  const toast = (msg, err) => { const t = $('#toast'); t.textContent = msg; t.className = err ? 'err' : ''; t.style.display = 'block'; clearTimeout(toast.t); toast.t = setTimeout(() => { t.style.display = 'none'; }, err ? 9000 : 5000); };
+  const status = (x) => { const t = today(); if (x.validFrom && x.validFrom > t) return 'scheduled'; if (x.validUntil && x.validUntil < t) return 'expired'; return 'active'; };
+  const imgUrl = (c, f) => (!f ? null : /^https?:\/\//i.test(f) ? f : `${c.publicDir}/${f}`);
+  const b64encText = (str) => bytesToB64(new TextEncoder().encode(str));
+  function bytesToB64(bytes) { let bin = ''; for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000)); return btoa(bin); }
+  const b64decText = (b64) => new TextDecoder().decode(Uint8Array.from(atob(b64.replace(/\s/g, '')), (c) => c.charCodeAt(0)));
+
+  /* ---------- token (kept only in this browser) ---------- */
+  const getToken = () => sessionStorage.getItem('dg_admin_token') || localStorage.getItem('dg_admin_token') || '';
+  function setToken(t, remember) {
+    sessionStorage.removeItem('dg_admin_token'); localStorage.removeItem('dg_admin_token');
+    if (t) (remember ? localStorage : sessionStorage).setItem('dg_admin_token', t);
+  }
+
+  /* ---------- GitHub API ---------- */
+  async function gh(path, opts = {}) {
+    const res = await fetch(path ? `${API}/${path}` : API, {
+      ...opts, cache: 'no-store',
+      headers: { Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28', Authorization: `Bearer ${getToken()}`, ...(opts.body ? { 'Content-Type': 'application/json' } : {}) }
+    });
+    if (!res.ok) {
+      let msg = `GitHub error ${res.status}`;
+      try { msg += ': ' + (await res.json()).message; } catch (e) {}
+      const err = new Error(msg); err.status = res.status; throw err;
+    }
+    return res.status === 204 ? null : res.json();
+  }
+  const files = {}; // path -> { data, sha }
+  async function loadJson(path, force) {
+    if (!files[path] || force) {
+      const f = await gh(`contents/${path}?ref=${REPO.branch}`);
+      files[path] = { data: JSON.parse(b64decText(f.content)), sha: f.sha };
+    }
+    return files[path];
+  }
+  async function saveJson(path, message) {
+    const f = files[path];
+    try {
+      const r = await gh(`contents/${path}`, { method: 'PUT', body: JSON.stringify({ message, branch: REPO.branch, sha: f.sha, content: b64encText(JSON.stringify(f.data, null, 2) + '\n') }) });
+      f.sha = r.content.sha;
+    } catch (e) {
+      if (e.status === 409 || e.status === 422) { await loadJson(path, true); e.message = 'The file changed elsewhere. It has been reloaded — please make your change again.'; }
+      throw e;
+    }
+  }
+  async function fileSha(path) { try { return (await gh(`contents/${path}?ref=${REPO.branch}`)).sha; } catch (e) { if (e.status === 404) return null; throw e; } }
+  async function putBinary(path, b64, message) {
+    const sha = await fileSha(path);
+    await gh(`contents/${path}`, { method: 'PUT', body: JSON.stringify({ message, branch: REPO.branch, content: b64, ...(sha ? { sha } : {}) }) });
+  }
+
+  /* ---------- image processing (in the browser) ---------- */
+  async function prepareImage(file, { max, square }) {
+    if (!/^image\//.test(file.type) && !/\.(heic|heif)$/i.test(file.name)) throw new Error('Please choose an image file.');
+    let bmp;
+    try { bmp = await createImageBitmap(file, { imageOrientation: 'from-image' }); }
+    catch (e) { throw new Error('This image format can\'t be read by your browser (iPhone HEIC?). Set the camera to "Most Compatible" or pick a JPG/PNG.'); }
+    let sx = 0, sy = 0, sw = bmp.width, sh = bmp.height;
+    if (square) { const s = Math.min(sw, sh); sx = (sw - s) / 2; sy = (sh - s) / 2; sw = sh = s; }
+    const scale = Math.min(1, max / Math.max(sw, sh));
+    const c = document.createElement('canvas');
+    c.width = Math.round(sw * scale); c.height = Math.round(sh * scale);
+    c.getContext('2d').drawImage(bmp, sx, sy, sw, sh, 0, 0, c.width, c.height);
+    let blob = await new Promise((r) => c.toBlob(r, 'image/webp', 0.82));
+    let ext = 'webp';
+    if (!blob || blob.type !== 'image/webp') { blob = await new Promise((r) => c.toBlob(r, 'image/jpeg', 0.85)); ext = 'jpg'; } // older Safari
+    const b64 = bytesToB64(new Uint8Array(await blob.arrayBuffer()));
+    return { b64, ext, preview: URL.createObjectURL(blob), kb: Math.round(blob.size / 1024) };
+  }
+
+  /* ---------- UI: tabs ---------- */
+  let current = 'promos';
+  function renderTabs() {
+    $('#tabs').innerHTML = TABS.map(([k, l]) => `<button type="button" data-tab="${k}" class="${k === current ? 'on' : ''}">${l}</button>`).join('');
+    $('#tabs').querySelectorAll('button').forEach((b) => b.addEventListener('click', () => { current = b.dataset.tab; renderTabs(); renderPanel(); }));
+  }
+  async function renderPanel() {
+    const panel = $('#panel');
+    panel.innerHTML = '<p class="muted">Loading…</p>';
+    try {
+      if (current === 'photos') await renderPhotos(panel);
+      else await renderCollection(panel, current);
+    } catch (e) { panel.innerHTML = `<div class="card"><p>${esc(e.message)}</p><button type="button" id="retry">Try again</button></div>`; $('#retry').onclick = () => renderPanel(); }
+  }
+
+  /* ---------- UI: collections (promos, sponsors, affiliations, ads, affiliates) ---------- */
+  async function renderCollection(panel, key) {
+    const c = COLLECTIONS[key];
+    const f = await loadJson(c.file);
+    const list = f.data[c.key] || (f.data[c.key] = []);
+    panel.innerHTML = `<div class="card">
+      <div class="row" style="justify-content:space-between"><h2>${esc(c.label)}</h2><button type="button" class="orange" id="addBtn">+ Add</button></div>
+      <p class="muted">${esc(c.intro)}</p>
+      <div id="list">${list.length ? list.map((x, i) => {
+        const img = imgUrl(c, x[c.imageKey]); const st = status(x);
+        const dates = [x.validFrom && `from ${x.validFrom}`, x.validUntil && `until ${x.validUntil}`].filter(Boolean).join(' ');
+        return `<div class="item">
+          ${img ? `<img src="${esc(img)}" alt="" onerror="this.outerHTML='<span class=ph>image</span>'">` : '<span class="ph">no image</span>'}
+          <div class="info"><strong>${esc(x[c.titleKey])}<span class="badge ${st}">${st}</span></strong>
+            <small>${esc([x.advertiser, x.network, x.type, x.date && `posted ${x.date}`, dates].filter(Boolean).join(' · '))}</small></div>
+          <button type="button" class="secondary" data-edit="${i}">Edit</button>
+          <button type="button" class="danger" data-del="${i}">Delete</button>
+        </div>`;
+      }).join('') : `<div class="empty">Nothing here yet — this section is hidden on the website until you add one.</div>`}</div>
+    </div>`;
+    $('#addBtn').onclick = () => openEditor(key, -1);
+    panel.querySelectorAll('[data-edit]').forEach((b) => (b.onclick = () => openEditor(key, +b.dataset.edit)));
+    panel.querySelectorAll('[data-del]').forEach((b) => (b.onclick = async () => {
+      const item = list[+b.dataset.del];
+      if (!confirm(`Delete "${item[c.titleKey]}" from the website?`)) return;
+      b.disabled = true;
+      list.splice(+b.dataset.del, 1);
+      try { await saveJson(c.file, `Admin: remove ${c.label.toLowerCase()} "${item[c.titleKey]}"`); toast('Deleted. The website updates in about a minute.'); }
+      catch (e) { toast(e.message, true); }
+      renderPanel();
+    }));
+  }
+
+  function openEditor(key, index) {
+    const c = COLLECTIONS[key];
+    const list = files[c.file].data[c.key];
+    const item = index >= 0 ? { ...list[index] } : {};
+    const pending = {}; // field -> prepared image
+    const dlg = $('#editor'); const form = $('#editorForm');
+    const field = (fd) => {
+      const v = item[fd.k] != null ? item[fd.k] : (index < 0 && fd.def ? (typeof fd.def === 'function' ? fd.def() : fd.def) : '');
+      const id = `f_${fd.k}`;
+      let input;
+      if (fd.type === 'textarea') input = `<textarea id="${id}" ${fd.req ? 'required' : ''} placeholder="${esc(fd.ph || '')}">${esc(v)}</textarea>`;
+      else if (fd.type === 'select') input = `<select id="${id}">${fd.options.map(([val, l]) => `<option value="${val}" ${val === (v || fd.options[0][0]) ? 'selected' : ''}>${esc(l)}</option>`).join('')}</select>`;
+      else if (fd.type === 'image') {
+        const cur = imgUrl(c, v);
+        input = `<input id="${id}" type="file" accept="image/*">
+          ${cur ? `<img class="preview" id="${id}_prev" src="${esc(cur)}" alt=""><label class="row" style="font-weight:500"><input type="checkbox" id="${id}_rm"> Remove image</label>` : `<img class="preview" id="${id}_prev" alt="" hidden>`}
+          <div class="hint" id="${id}_info">JPG/PNG from your phone or computer — it is resized automatically.</div>`;
+      } else input = `<input id="${id}" type="${fd.type === 'url' ? 'url' : fd.type === 'date' ? 'date' : 'text'}" value="${esc(v)}" ${fd.req ? 'required' : ''} placeholder="${esc(fd.ph || (fd.type === 'url' ? 'https://…' : ''))}">`;
+      return `<div><label for="${id}">${esc(fd.label)}${fd.req ? ' *' : ''}</label>${input}${fd.hint ? `<div class="hint">${esc(fd.hint)}</div>` : ''}</div>`;
+    };
+    form.innerHTML = `<h2>${index >= 0 ? 'Edit' : 'Add'} — ${esc(c.label)}</h2>
+      <div class="grid2">${c.fields.map(field).join('')}</div>
+      <div class="row" style="margin-top:16px;justify-content:flex-end">
+        <button type="button" class="secondary" id="cancelBtn">Cancel</button>
+        <button type="submit" id="saveBtn">Save &amp; publish</button>
+      </div>`;
+    c.fields.filter((fd) => fd.type === 'image').forEach((fd) => {
+      const input = $(`#f_${fd.k}`);
+      input.addEventListener('change', async () => {
+        const file = input.files[0]; if (!file) return;
+        const info = $(`#f_${fd.k}_info`); info.textContent = 'Preparing image…';
+        try {
+          pending[fd.k] = await prepareImage(file, { max: c.imgMax, square: false });
+          const prev = $(`#f_${fd.k}_prev`); prev.src = pending[fd.k].preview; prev.hidden = false;
+          info.textContent = `Ready (${pending[fd.k].kb} KB). It uploads when you save.`;
+        } catch (e) { info.textContent = e.message; input.value = ''; delete pending[fd.k]; }
+      });
+    });
+    $('#cancelBtn').onclick = () => dlg.close();
+    form.onsubmit = async (ev) => {
+      ev.preventDefault();
+      if (!form.reportValidity()) return;
+      const save = $('#saveBtn'); save.disabled = true; save.textContent = 'Saving…';
+      try {
+        const out = {};
+        for (const fd of c.fields) {
+          if (fd.type === 'image') {
+            if (pending[fd.k]) {
+              const name = `${slug(($(`#f_${c.titleKey}`) || {}).value || key).slice(0, 40) || key}-${Date.now()}.${pending[fd.k].ext}`;
+              save.textContent = 'Uploading image…';
+              await putBinary(`${c.folder}/${name}`, pending[fd.k].b64, `Admin: upload ${c.label.toLowerCase()} image ${name}`);
+              out[fd.k] = name;
+            } else if (item[fd.k] && !($(`#f_${fd.k}_rm`) || {}).checked) out[fd.k] = item[fd.k];
+          } else {
+            const val = $(`#f_${fd.k}`).value.trim();
+            if (val) out[fd.k] = val;
+          }
+        }
+        if (out.validFrom && out.validUntil && out.validUntil < out.validFrom) throw new Error('The end date is before the start date.');
+        if (index >= 0) list[index] = out; else list.unshift(out);
+        if (key === 'promos') list.sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
+        save.textContent = 'Publishing…';
+        await saveJson(c.file, `Admin: ${index >= 0 ? 'update' : 'add'} ${c.label.toLowerCase()} "${out[c.titleKey]}"`);
+        dlg.close();
+        toast('Saved! The website updates in about a minute.');
+        renderPanel();
+      } catch (e) {
+        toast(e.message, true);
+        save.disabled = false; save.textContent = 'Save & publish';
+      }
+    };
+    dlg.showModal();
+  }
+
+  /* ---------- UI: product photos ---------- */
+  let photoFilter = 'missing', photoSearch = '';
+  const localPreviews = {}; // product name -> object URL of a just-uploaded photo
+  async function renderPhotos(panel) {
+    const f = await loadJson(PRODUCTS_FILE);
+    const products = f.data.products || [];
+    const have = products.filter((p) => p.image).length;
+    const list = products.filter((p) => (photoFilter === 'all' || !p.image) && p.name.toLowerCase().includes(photoSearch));
+    panel.innerHTML = `<div class="card">
+      <h2>Product photos</h2>
+      <p class="muted">${have} of ${products.length} products have a photo. Tap “Add photo” to take a picture or choose one — it is cropped square, resized and published. Use photos of your own stock only.</p>
+      <div class="filters">
+        <input type="search" id="pSearch" placeholder="Search products…" value="${esc(photoSearch)}">
+        <select id="pFilter"><option value="missing" ${photoFilter === 'missing' ? 'selected' : ''}>Needs photo (${products.length - have})</option><option value="all" ${photoFilter === 'all' ? 'selected' : ''}>All products (${products.length})</option></select>
+      </div>
+      <div id="pList">${list.slice(0, 200).map((p) => {
+        const src = localPreviews[p.name] || (p.image ? `assets/products/${p.image}` : null);
+        return `<div class="item">
+          ${src ? `<img src="${esc(src)}" alt="">` : '<span class="ph">no photo</span>'}
+          <div class="info"><strong>${esc(p.name)}</strong><small>${esc(p.category)} · ${p.stock} in stock</small></div>
+          <label class="btn" style="margin:0">${p.image ? 'Replace' : 'Add photo'}<input type="file" accept="image/*" data-name="${esc(p.name)}" hidden></label>
+          ${p.image ? `<button type="button" class="danger" data-rm="${esc(p.name)}">Remove</button>` : ''}
+        </div>`;
+      }).join('') || '<div class="empty">No products match.</div>'}</div>
+    </div>`;
+    $('#pSearch').oninput = (e) => { photoSearch = e.target.value.trim().toLowerCase(); renderPhotos(panel); $('#pSearch').focus(); $('#pSearch').setSelectionRange(99, 99); };
+    $('#pFilter').onchange = (e) => { photoFilter = e.target.value; renderPhotos(panel); };
+    panel.querySelectorAll('input[type=file][data-name]').forEach((input) => input.addEventListener('change', async () => {
+      const file = input.files[0]; if (!file) return;
+      const p = products.find((x) => x.name === input.dataset.name);
+      const label = input.parentElement; label.textContent = 'Uploading…';
+      try {
+        const img = await prepareImage(file, { max: 800, square: true });
+        const name = `${slug(p.name)}.${img.ext}`;
+        await putBinary(`docs/assets/products/${name}`, img.b64, `Admin: product photo for ${p.name}`);
+        p.image = name;
+        await saveJson(PRODUCTS_FILE, `Admin: set photo for ${p.name}`);
+        localPreviews[p.name] = img.preview;
+        toast(`Photo added for ${p.name}. Live in about a minute.`);
+      } catch (e) { toast(e.message, true); }
+      renderPhotos(panel);
+    }));
+    panel.querySelectorAll('[data-rm]').forEach((b) => (b.onclick = async () => {
+      const p = products.find((x) => x.name === b.dataset.rm);
+      if (!confirm(`Remove the photo from "${p.name}"?`)) return;
+      b.disabled = true;
+      delete p.image; delete localPreviews[p.name];
+      try { await saveJson(PRODUCTS_FILE, `Admin: remove photo for ${p.name}`); toast('Photo removed.'); } catch (e) { toast(e.message, true); }
+      renderPhotos(panel);
+    }));
+  }
+
+  /* ---------- connect / disconnect ---------- */
+  async function connect() {
+    const btn = $('#connectBtn'); btn.disabled = true; btn.textContent = 'Checking…';
+    try {
+      const repo = await gh();
+      if (!repo.permissions || !repo.permissions.push) throw new Error('This token can read the repository but cannot save changes. Give it "Contents: Read and write" permission.');
+      $('#connectCard').hidden = true; $('#app').hidden = false; $('#logoutBtn').hidden = false;
+      $('#who').textContent = `Connected to ${REPO.owner}/${REPO.repo}`;
+      renderTabs(); renderPanel();
+    } catch (e) {
+      setToken('');
+      toast(e.status === 401 ? 'That token is not valid (or has expired).' : e.status === 404 ? 'This token has no access to the website repository.' : e.message, true);
+    }
+    btn.disabled = false; btn.textContent = 'Connect';
+  }
+  $('#connectBtn').onclick = () => { const t = $('#token').value.trim(); if (!t) return toast('Paste your token first.', true); setToken(t, $('#remember').checked); $('#token').value = ''; connect(); };
+  $('#token').addEventListener('keydown', (e) => { if (e.key === 'Enter') $('#connectBtn').click(); });
+  $('#logoutBtn').onclick = () => { setToken(''); location.reload(); };
+  if (getToken()) connect();
+})();
+</script>
+</body>
+</html>

@@ -15,6 +15,8 @@ Live (GitHub Pages, served from `docs/`): https://darskeeworks-services.github.i
 | About | `docs/about.html` | Story, mission, verified services, location |
 | Contact | `docs/contact.html` | Store info, call / Messenger / directions, validated form → Messenger, map |
 | FAQ | `docs/faq.html` | Accessible accordion |
+| Partners | `docs/partners.html` | Sponsors, affiliations, sponsored ads, affiliate picks (from `docs/assets/partners.json`) + "advertise with us" |
+| Admin (unlisted) | `docs/admin-jtbzunc98ngd.html` | Edit promos, sponsors, affiliations, sponsored ads, affiliate links and product photos |
 
 ## Project layout
 - `tools/sync-products.js` — turns the store system export into the public product list (`docs/assets/products.json`)
@@ -41,6 +43,15 @@ All links are relative, so the site works under the `/dgtechandload.com/` sub-pa
 If you connect a custom domain later, add `docs/CNAME` and update `SITE` at the top of `tools/build-pages.js` (used for canonical URLs, social previews and SEO data), then rebuild.
 
 A backup of the previous live version is tagged `backup/pre-redesign` (`git checkout backup/pre-redesign`).
+
+## Admin page (easiest way to update)
+Open **https://darskeeworks-services.github.io/dgtechandload.com/admin-jtbzunc98ngd.html** (bookmark it; it isn't linked anywhere and asks search engines not to index it).
+
+- It edits the live site by committing to GitHub; changes go live about a minute after "Save & publish". Works on a phone.
+- **Security:** the page holds no secrets, and the repository is public, so the address is *not* the protection — your **GitHub token** is. Create a fine-grained token (GitHub → Settings → Developer settings → Fine-grained tokens) for resource owner *DarskeeWorks-Services*, only the *dgtechandload.com* repository, permission **Contents: Read and write**, with an expiry. Paste it into the admin page; it stays in that browser only (tick "Remember" only on your own device). If it leaks, delete it on GitHub.
+- Tabs: **Promos**, **Sponsors**, **Affiliations**, **Sponsored ads** (paid placements, labelled "Sponsored", one rotated per page, auto-hide after their end date), **Affiliate links** (shown with a commission notice), **Product photos** (take/choose a photo; it's cropped, resized and published).
+- Empty sections are hidden on the website, so nothing appears until you add something real.
+- ⚠️ The admin commits directly to GitHub, so **run `git pull` before working locally** (before `npm run sync`, `npm run photos` or `npm run build`), otherwise you may overwrite admin changes or lose product photos.
 
 ## Updating content
 - **Products / stock / prices** — come from the store system export `DandG-store-data.json` (Google Drive):

@@ -361,12 +361,15 @@
     if (p.validUntil && p.validUntil < today) return false;
     return true;
   }
+  const todayStr = () => {
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  };
   async function loadPromos() {
     const res = await fetch('assets/promos/promos.json?cb=' + Date.now());
     if (!res.ok) throw new Error(res.status);
     const data = await res.json();
-    const d = new Date();
-    const today = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    const today = todayStr();
     return (data.promos || [])
       .filter((p) => p && p.title && isActive(p, today))
       .sort((a, b) => String(b.date).localeCompare(String(a.date)));
@@ -396,6 +399,74 @@
         </a>`;
     }).join('');
     section.hidden = false;
+  }
+
+  /* =====================================================
+     PARTNERS — sponsors, affiliations, sponsored ads, affiliate links
+     (assets/partners.json, managed from the admin page). Every slot is a
+     [data-partners] element inside hidden [data-partners-wrap] containers,
+     revealed only when there is something real to show.
+     ===================================================== */
+  const partnerImg = (f) => (!f ? null : /^https?:\/\//i.test(f) ? f : `assets/partners/${f}`);
+  const safeUrl = (u) => (/^https?:\/\//i.test(u || '') ? u : null);
+  async function loadPartners() {
+    const res = await fetch('assets/partners.json?cb=' + Date.now());
+    if (!res.ok) throw new Error(res.status);
+    const d = await res.json();
+    const today = todayStr();
+    const active = (list) => (list || []).filter((x) => x && (x.name || x.title) && isActive(x, today));
+    return { sponsors: active(d.sponsors), affiliations: active(d.affiliations), ads: active(d.ads), affiliates: active(d.affiliates) };
+  }
+  function partnerLogo(x, rel) {
+    const img = partnerImg(x.logo);
+    const inner = img ? `<img src="${esc(img)}" alt="${esc(x.name)}" loading="lazy">` : `<span>${esc(x.name)}</span>`;
+    const note = x.note ? `<small>${esc(x.note)}</small>` : '';
+    const url = safeUrl(x.url);
+    return url
+      ? `<a class="partner-logo" href="${esc(url)}" target="_blank" rel="${rel}" title="${esc(x.name)}">${inner}${note}</a>`
+      : `<div class="partner-logo" title="${esc(x.name)}">${inner}${note}</div>`;
+  }
+  function adCard(a) {
+    const img = partnerImg(a.image);
+    const url = safeUrl(a.url);
+    const body = `<span class="ad-label">Sponsored</span>
+      ${img ? `<span class="ad-card__media"><img src="${esc(img)}" alt="" loading="lazy"></span>` : ''}
+      <span class="ad-card__body"><strong>${esc(a.title)}</strong>${a.text ? `<span>${esc(a.text)}</span>` : ''}${a.advertiser ? `<small>by ${esc(a.advertiser)}</small>` : ''}</span>`;
+    return url ? `<a class="ad-card" href="${esc(url)}" target="_blank" rel="sponsored noopener">${body}</a>` : `<div class="ad-card">${body}</div>`;
+  }
+  function affiliateCard(a) {
+    const img = partnerImg(a.image);
+    const url = safeUrl(a.url);
+    if (!url) return '';
+    return `<a class="aff-card" href="${esc(url)}" target="_blank" rel="sponsored noopener">
+      <span class="aff-card__media">${img ? `<img src="${esc(img)}" alt="" loading="lazy">` : icon('bag')}</span>
+      <span class="aff-card__body"><strong>${esc(a.title)}</strong>${a.text ? `<span>${esc(a.text)}</span>` : ''}
+        <span class="btn btn--orange btn--sm">${a.network ? `Shop on ${esc(a.network)}` : 'Shop now'} ${icon('arrow')}</span></span>
+    </a>`;
+  }
+  async function renderPartners() {
+    const slots = $$('[data-partners]');
+    if (!slots.length) return;
+    let p;
+    try { p = await loadPartners(); } catch (e) { return; } // sections stay hidden
+    slots.forEach((el) => {
+      const kind = el.dataset.partners;
+      let html = '';
+      if (kind === 'sponsors') html = p.sponsors.map((x) => partnerLogo(x, 'sponsored noopener')).join('');
+      else if (kind === 'affiliations') html = p.affiliations.map((x) => partnerLogo(x, 'noopener')).join('');
+      else if (kind === 'affiliates') html = p.affiliates.map(affiliateCard).join('');
+      else if (kind === 'ads') html = p.ads.map(adCard).join('');
+      else if (kind.startsWith('ad-')) { // one sponsored placement, rotated per visit
+        const place = kind.slice(3);
+        const pool = p.ads.filter((a) => !a.placement || a.placement === 'all' || a.placement === place);
+        if (pool.length) html = adCard(pool[Math.floor(Math.random() * pool.length)]);
+      }
+      if (!html) return;
+      el.innerHTML = html;
+      for (let w = el.closest('[data-partners-wrap]'); w; w = w.parentElement && w.parentElement.closest('[data-partners-wrap]')) w.hidden = false;
+    });
+    const none = $('#partnersEmpty');
+    if (none) none.hidden = !!(p.sponsors.length || p.affiliations.length || p.ads.length || p.affiliates.length);
   }
 
   /* =====================================================
@@ -508,6 +579,7 @@
     renderFaq();
     startCatalog(); // loads products from assets/products.json
     renderHomePromos();
+    renderPartners();
     bindForm();
     revealObserve();
   }
