@@ -616,7 +616,8 @@
       "name": "CASE SAM A70",
       "category": "Cases & Screen Protectors",
       "price": 200,
-      "stock": 1
+      "stock": 1,
+      "image": "case-sam-a70.webp"
     },
     {
       "name": "CASE SMART 20",
