@@ -945,7 +945,8 @@
       "name": "BATTERY BL-4C",
       "category": "Batteries",
       "price": 280,
-      "stock": 3
+      "stock": 3,
+      "image": "battery-bl-4c.webp"
     },
     {
       "name": "BATTERY BL-4L",
