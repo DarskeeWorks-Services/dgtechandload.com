@@ -236,7 +236,8 @@
       "name": "OTG USB V8",
       "category": "Chargers & Cables",
       "price": 150,
-      "stock": 1
+      "stock": 1,
+      "image": "otg-usb-v8.webp"
     },
     {
       "name": "PP-IOS CHARGER",
