@@ -257,7 +257,8 @@
       "name": "REMAX CABLE TC",
       "category": "Chargers & Cables",
       "price": 150,
-      "stock": 2
+      "stock": 2,
+      "image": "remax-cable-tc.webp"
     },
     {
       "name": "V-POWER C131 37W/TC",
