@@ -602,7 +602,8 @@
       "name": "CASE SAM A11",
       "category": "Cases & Screen Protectors",
       "price": 200,
-      "stock": 1
+      "stock": 1,
+      "image": "case-sam-a11.webp"
     },
     {
       "name": "CASE SAM A25 5G",
