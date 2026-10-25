@@ -97,7 +97,8 @@
       "name": "AUX CABLE",
       "category": "Chargers & Cables",
       "price": 100,
-      "stock": 2
+      "stock": 2,
+      "image": "aux-cable.webp"
     },
     {
       "name": "BISEN 676 CHARGER 5G",
