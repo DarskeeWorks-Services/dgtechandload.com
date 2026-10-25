@@ -441,7 +441,8 @@
       "name": "CASE C11 2021",
       "category": "Cases & Screen Protectors",
       "price": 250,
-      "stock": 1
+      "stock": 1,
+      "image": "case-c11-2021.webp"
     },
     {
       "name": "CASE CAMON 40 PRO",
