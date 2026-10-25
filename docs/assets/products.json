@@ -76,7 +76,8 @@
       "name": "ALI CHARGER 5G",
       "category": "Chargers & Cables",
       "price": 350,
-      "stock": 1
+      "stock": 1,
+      "image": "ali-charger-5g.webp"
     },
     {
       "name": "ALI CHARGER TC",
