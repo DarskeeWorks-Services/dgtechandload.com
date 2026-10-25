@@ -173,7 +173,8 @@
       "name": "DT-100 ADAPTOR",
       "category": "Chargers & Cables",
       "price": 150,
-      "stock": 2
+      "stock": 2,
+      "image": "dt-100-adaptor.webp"
     },
     {
       "name": "HDMI 1.5M",
