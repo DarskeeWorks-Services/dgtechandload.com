@@ -841,7 +841,8 @@
       "name": "SIMCARD TNT",
       "category": "SIM & Load",
       "price": 45,
-      "stock": 18
+      "stock": 18,
+      "image": "simcard-tnt.webp"
     },
     {
       "name": "SIMCARD GLOBE",
