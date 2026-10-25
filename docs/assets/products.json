@@ -806,7 +806,8 @@
       "name": "SIMCARD DITO",
       "category": "SIM & Load",
       "price": 39,
-      "stock": 101
+      "stock": 101,
+      "image": "simcard-dito.webp"
     },
     {
       "name": "SIMCARD GLOBE RETAILER",
