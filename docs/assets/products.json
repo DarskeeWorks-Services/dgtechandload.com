@@ -644,7 +644,8 @@
       "name": "CASE Y02/Y02A",
       "category": "Cases & Screen Protectors",
       "price": 200,
-      "stock": 2
+      "stock": 2,
+      "image": "case-y02-y02a.webp"
     },
     {
       "name": "CASE Y11/Y17",
