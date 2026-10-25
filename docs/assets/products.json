@@ -693,7 +693,8 @@
       "name": "TEMPERED C11",
       "category": "Cases & Screen Protectors",
       "price": 200,
-      "stock": 8
+      "stock": 8,
+      "image": "tempered-c11.webp"
     },
     {
       "name": "TEMPERED C11 FULL",
