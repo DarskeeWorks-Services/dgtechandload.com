@@ -83,7 +83,8 @@
       "name": "ALI CHARGER TC",
       "category": "Chargers & Cables",
       "price": 350,
-      "stock": 4
+      "stock": 4,
+      "image": "ali-charger-tc.webp"
     },
     {
       "name": "ALI-3618 25W ULO",
