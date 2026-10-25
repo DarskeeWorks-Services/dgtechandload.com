@@ -910,7 +910,8 @@
       "name": "BOX MOUSE",
       "category": "Computer Accessories",
       "price": 150,
-      "stock": 5
+      "stock": 5,
+      "image": "box-mouse.webp"
     },
     {
       "name": "K1000 KEYBOARD",
