@@ -903,7 +903,8 @@
       "name": "S-43/124 BRACELET",
       "category": "Wearables",
       "price": 80,
-      "stock": 10
+      "stock": 10,
+      "image": "s-43-124-bracelet.webp"
     },
     {
       "name": "BOX MOUSE",
