@@ -62,7 +62,8 @@
       "name": "ALI CC12 CAR 5G",
       "category": "Chargers & Cables",
       "price": 280,
-      "stock": 1
+      "stock": 1,
+      "image": "ali-cc12-car-5g.webp"
     },
     {
       "name": "Ali CC12 CAR V8",
