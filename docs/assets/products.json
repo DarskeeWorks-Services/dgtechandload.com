@@ -19,7 +19,8 @@
       "name": "CELLPHONE Y66",
       "category": "Phones & Tablets",
       "price": 3198,
-      "stock": 2
+      "stock": 2,
+      "image": "cellphone-y66.webp"
     },
     {
       "name": "FOLDING DESKTOP PHONE",
