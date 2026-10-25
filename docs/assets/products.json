@@ -959,7 +959,8 @@
       "name": "BATTERY BL-5C",
       "category": "Batteries",
       "price": 280,
-      "stock": 1
+      "stock": 1,
+      "image": "battery-bl-5c.webp"
     },
     {
       "name": "CAR HOLDER",
