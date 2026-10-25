@@ -111,7 +111,8 @@
       "name": "BISEN 676 CHARGER TC",
       "category": "Chargers & Cables",
       "price": 250,
-      "stock": 5
+      "stock": 5,
+      "image": "bisen-676-charger-tc.webp"
     },
     {
       "name": "BISEN BC-365 ULO",
