@@ -13,7 +13,8 @@
       "name": "CELLPHONE Y55",
       "category": "Phones & Tablets",
       "price": 2598,
-      "stock": 1
+      "stock": 1,
+      "image": "cellphone-y55.webp"
     },
     {
       "name": "CELLPHONE Y66",
