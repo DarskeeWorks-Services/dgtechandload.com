@@ -1008,7 +1008,8 @@
       "name": "USB LIGHT",
       "category": "Accessories",
       "price": 100,
-      "stock": 2
+      "stock": 2,
+      "image": "usb-light.webp"
     }
   ]
 }
