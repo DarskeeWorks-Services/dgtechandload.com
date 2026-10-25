@@ -490,7 +490,8 @@
       "name": "CASE IP 12 PRO",
       "category": "Cases & Screen Protectors",
       "price": 200,
-      "stock": 1
+      "stock": 1,
+      "image": "case-ip-12-pro.webp"
     },
     {
       "name": "CASE IP 12 PRO MAX",
