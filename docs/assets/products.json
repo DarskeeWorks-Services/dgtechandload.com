@@ -882,7 +882,8 @@
       "name": "SANDISK USB 64GB",
       "category": "Memory & Storage",
       "price": 1200,
-      "stock": 1
+      "stock": 1,
+      "image": "sandisk-usb-64gb.webp"
     },
     {
       "name": "SKONE MEMORY CARD 2GB",
