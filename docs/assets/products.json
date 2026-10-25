@@ -427,7 +427,8 @@
       "name": "CASE 15 PRO MAX",
       "category": "Cases & Screen Protectors",
       "price": 200,
-      "stock": 1
+      "stock": 1,
+      "image": "case-15-pro-max.webp"
     },
     {
       "name": "CASE A50",
