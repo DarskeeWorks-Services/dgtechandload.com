@@ -393,7 +393,8 @@
       "name": "P-BANK BISEN 20M",
       "category": "Power Banks",
       "price": 1150,
-      "stock": 1
+      "stock": 1,
+      "image": "p-bank-bisen-20m.webp"
     },
     {
       "name": "P-BANK ROMOS 10M",
