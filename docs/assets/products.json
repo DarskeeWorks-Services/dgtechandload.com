@@ -734,7 +734,8 @@
       "name": "TEMPERED SMART 20",
       "category": "Cases & Screen Protectors",
       "price": 200,
-      "stock": 1
+      "stock": 1,
+      "image": "tempered-smart-20.webp"
     },
     {
       "name": "TEMPERED SPARK GO3",
