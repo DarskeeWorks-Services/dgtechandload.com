@@ -931,7 +931,8 @@
       "name": "MOUSEPAD G-1",
       "category": "Computer Accessories",
       "price": 120,
-      "stock": 1
+      "stock": 1,
+      "image": "mousepad-g-1.webp"
     },
     {
       "name": "MOUSEPAD H-2",
