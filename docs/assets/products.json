@@ -194,7 +194,8 @@
       "name": "K/TC PP-081 CHARGER TC",
       "category": "Chargers & Cables",
       "price": 250,
-      "stock": 3
+      "stock": 3,
+      "image": "k-tc-pp-081-charger-tc.webp"
     },
     {
       "name": "K/TC PP-081 CHARGER V8",
