@@ -90,7 +90,8 @@
       "name": "ALI-3618 25W ULO",
       "category": "Chargers & Cables",
       "price": 320,
-      "stock": 2
+      "stock": 2,
+      "image": "ali-3618-25w-ulo.webp"
     },
     {
       "name": "AUX CABLE",
