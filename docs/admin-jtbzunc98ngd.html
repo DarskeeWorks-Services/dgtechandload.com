@@ -56,9 +56,30 @@
   .empty { color: var(--muted); padding: 18px; text-align: center; border: 1px dashed var(--line); border-radius: 10px; }
   .preview { margin-top: 8px; max-width: 220px; border-radius: 8px; display: block; }
   #toast { position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); z-index: 50; max-width: 92vw; padding: 12px 18px; border-radius: 10px; background: #0f2a4a; border: 1px solid var(--blue); box-shadow: 0 10px 30px rgba(0,0,0,.5); display: none; }
-  #toast.err { border-color: var(--bad); background: #3a1414; }
+  #toast.err { border-color: var(--bad); background: #3a1414; cursor: pointer; }
+  #toast.err::after { content: ' (tap to close)'; color: var(--muted); font-size: .8em; }
+  @media (max-width: 600px) { header h1 { font-size: .92rem; } header .who { display: none; } header button { padding: 7px 12px; } }
   dialog { width: min(640px, 94vw); max-height: 90vh; background: var(--card); color: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
   dialog::backdrop { background: rgba(0,0,0,.7); }
+  label.secondary-btn { background: transparent; border-color: var(--line); }
+  /* camera */
+  dialog.cam { width: min(520px, 96vw); padding: 14px; }
+  @media (max-width: 600px) { dialog.cam { width: 100%; max-width: 100%; height: 100%; max-height: 100%; margin: 0; border: 0; border-radius: 0; overflow-x: hidden; } }
+  .cam__head { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .cam__head strong { display: block; }
+  .cam__head small { display: block; color: var(--muted); font-size: .8rem; }
+  .cam__view { position: relative; aspect-ratio: 1; background: #000; border-radius: 12px; overflow: hidden; }
+  .cam__view video, .cam__view img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .cam__frame { position: absolute; inset: 7%; border: 2px dashed rgba(255,255,255,.6); border-radius: 12px; pointer-events: none; }
+  .cam__msg { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 24px; text-align: center; background: #0a1426; }
+  .cam__controls { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 14px; }
+  #camReview { justify-content: center; }
+  #camReview button { flex: 1; justify-content: center; padding: 14px; }
+  .cam__shutter { width: 74px; height: 74px; border-radius: 50%; padding: 0; background: #fff; border: 6px solid var(--orange); box-shadow: 0 0 0 3px rgba(255,255,255,.25); }
+  .cam__shutter:active { transform: scale(.92); }
+  .cam__shutter:disabled { opacity: .35; }
+  .cam__alt { display: block; text-align: center; margin-top: 12px; font-size: .85rem; color: var(--muted); font-weight: 400; }
+  .cam__alt span { color: var(--blue); text-decoration: underline; cursor: pointer; }
   .steps { margin: 8px 0 0; padding-left: 20px; color: var(--muted); font-size: .88rem; }
   .steps li { margin-bottom: 4px; }
   .filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
@@ -76,7 +97,18 @@
 
 <main>
   <!-- CONNECT -->
-  <section class="card" id="connectCard">
+  <section class="card" id="pwCard" hidden>
+    <h2>Admin sign in</h2>
+    <form id="pwForm">
+      <label for="pw">Password</label>
+      <input id="pw" type="password" autocomplete="current-password" required />
+      <label class="row" style="margin:10px 0 0;font-weight:500"><input type="checkbox" id="pwRemember" /> Stay signed in on this device</label>
+      <div class="row" style="margin-top:14px"><button type="submit" id="pwBtn">Sign in</button></div>
+    </form>
+    <p class="muted" style="margin-top:14px"><a href="#" id="useToken">Sign in with a GitHub token instead</a> (needed if the saved token expired).</p>
+  </section>
+
+  <section class="card" id="connectCard" hidden>
     <h2>Connect to GitHub</h2>
     <p class="muted">This page edits the live website by saving changes to its GitHub repository. Enter a GitHub access token that has write access to <code>DarskeeWorks-Services/dgtechandload.com</code>. The token stays in this browser only and is never put into the website.</p>
     <label for="token">GitHub access token</label>
@@ -85,16 +117,23 @@
       <label class="row" style="margin:0;font-weight:500"><input type="checkbox" id="remember" /> Remember on this device</label>
     </div>
     <div class="row" style="margin-top:14px"><button id="connectBtn">Connect</button></div>
-    <details style="margin-top:14px">
-      <summary class="muted">How do I get a token?</summary>
+    <details style="margin-top:14px" open>
+      <summary class="muted">First time? Get your token (one-time setup, about 2 minutes)</summary>
+      <p class="muted" style="margin:10px 0 6px">You only do this once. Afterwards, turn on <b>Password login</b> and you'll just type your password.</p>
+      <p style="margin:12px 0 4px"><b>Option A — simplest (works right away)</b></p>
       <ol class="steps">
-        <li>Open <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GitHub → Settings → Developer settings → Fine-grained tokens → Generate new token</a>.</li>
-        <li>Resource owner: <b>DarskeeWorks-Services</b>. Expiration: 90 days (or your choice).</li>
-        <li>Repository access: <b>Only select repositories</b> → <b>dgtechandload.com</b>.</li>
-        <li>Permissions → Repository permissions → <b>Contents: Read and write</b>. Nothing else is needed.</li>
-        <li>Generate, copy the token, and paste it above. Treat it like a password.</li>
+        <li><a class="btn" style="padding:6px 12px" href="https://github.com/settings/tokens/new?scopes=public_repo&amp;description=DandG%20website%20admin" target="_blank" rel="noopener">Open GitHub: new classic token</a> — the name and the <b>public_repo</b> box are already filled in.</li>
+        <li>Choose an expiration (e.g. 1 year), scroll down, tap <b>Generate token</b>, copy it and paste it above.</li>
       </ol>
-      <p class="muted">Only tick "Remember" on your own phone/computer. Anyone with the token can change the website — if it leaks, delete it on GitHub and make a new one.</p>
+      <p class="hint">This token can edit all public repositories you have access to — keep it private.</p>
+      <p style="margin:14px 0 4px"><b>Option B — safest (only this website)</b></p>
+      <ol class="steps">
+        <li><a class="btn" style="padding:6px 12px" href="https://github.com/settings/personal-access-tokens/new?name=DandG%20website%20admin&amp;target_name=DarskeeWorks-Services&amp;expires_in=366&amp;contents=write" target="_blank" rel="noopener">Open GitHub: new fine-grained token</a></li>
+        <li>Check: Resource owner <b>DarskeeWorks-Services</b> · Repository access <b>Only select repositories → dgtechandload.com</b> · Repository permissions <b>Contents: Read and write</b>.</li>
+        <li>Generate, copy and paste it above.</li>
+        <li>Then approve it: open <a href="https://github.com/organizations/DarskeeWorks-Services/settings" target="_blank" rel="noopener">DarskeeWorks-Services settings</a> → left menu <b>Personal access tokens</b> → <b>Pending requests</b> → approve. Until approved it can only read, and saving shows an error.</li>
+      </ol>
+      <p class="muted">Only tick "Remember" on your own phone/computer. If a token leaks, delete it on GitHub and make a new one.</p>
     </details>
   </section>
 
@@ -107,6 +146,33 @@
 </main>
 
 <dialog id="editor"><form id="editorForm" method="dialog"></form></dialog>
+
+<dialog id="camera" class="cam" aria-label="Take product photo">
+  <div class="cam__head">
+    <div><strong id="camName"></strong><small id="camStep"></small></div>
+    <button type="button" class="secondary" id="camClose">Done</button>
+  </div>
+  <div class="cam__view">
+    <video id="camVideo" playsinline muted autoplay></video>
+    <img id="camShot" alt="Photo preview" hidden>
+    <div class="cam__frame" aria-hidden="true"></div>
+    <div class="cam__msg" id="camMsg" hidden>
+      <p id="camMsgText"></p>
+      <button type="button" class="orange" id="camNativeBtn">📷 Open camera app</button>
+    </div>
+  </div>
+  <div class="cam__controls" id="camLive">
+    <button type="button" class="secondary" id="camSwitch" aria-label="Switch camera" title="Switch camera">🔄</button>
+    <button type="button" class="cam__shutter" id="camSnap" aria-label="Take photo"></button>
+    <button type="button" class="secondary" id="camSkip">Skip</button>
+  </div>
+  <div class="cam__controls" id="camReview" hidden>
+    <button type="button" class="secondary" id="camRetake">Retake</button>
+    <button type="button" class="orange" id="camUse">Use photo</button>
+  </div>
+  <label class="cam__alt">or <span>choose a photo from the gallery</span><input type="file" accept="image/*" id="camFile" hidden></label>
+  <input type="file" accept="image/*" capture="environment" id="camNative" hidden>
+</dialog>
 <div id="toast" role="status" aria-live="polite"></div>
 
 <script>
@@ -186,19 +252,56 @@
       ]
     }
   };
-  const TABS = [['promos', 'Promos'], ['sponsors', 'Sponsors'], ['affiliations', 'Affiliations'], ['ads', 'Sponsored ads'], ['affiliates', 'Affiliate links'], ['photos', 'Product photos']];
+  const TABS = [['promos', 'Promos'], ['sponsors', 'Sponsors'], ['affiliations', 'Affiliations'], ['ads', 'Sponsored ads'], ['affiliates', 'Affiliate links'], ['photos', 'Product photos'], ['password', 'Password login']];
   const PRODUCTS_FILE = 'docs/assets/products.json';
+  // Password login: the GitHub token is encrypted with the owner's password (AES-256-GCM,
+  // key from PBKDF2-SHA256). Only the encrypted blob is published; the password is never stored.
+  const KEY_FILE = 'docs/assets/admin-key.json';
+  const KEY_URL = 'assets/admin-key.json';
+  const KDF_ITERATIONS = 600000;
 
   /* ---------- helpers ---------- */
   const $ = (s, c = document) => c.querySelector(s);
   const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const slug = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-  const toast = (msg, err) => { const t = $('#toast'); t.textContent = msg; t.className = err ? 'err' : ''; t.style.display = 'block'; clearTimeout(toast.t); toast.t = setTimeout(() => { t.style.display = 'none'; }, err ? 9000 : 5000); };
+  // Errors stay up longer (long ones until tapped) so the instructions can be read.
+  const toast = (msg, err) => {
+    const t = $('#toast'); t.textContent = msg; t.className = err ? 'err' : ''; t.style.display = 'block'; clearTimeout(toast.t);
+    if (!(err && msg.length > 120)) toast.t = setTimeout(() => { t.style.display = 'none'; }, err ? 12000 : 5000);
+  };
+  $('#toast').addEventListener('click', () => { $('#toast').style.display = 'none'; });
   const status = (x) => { const t = today(); if (x.validFrom && x.validFrom > t) return 'scheduled'; if (x.validUntil && x.validUntil < t) return 'expired'; return 'active'; };
   const imgUrl = (c, f) => (!f ? null : /^https?:\/\//i.test(f) ? f : `${c.publicDir}/${f}`);
   const b64encText = (str) => bytesToB64(new TextEncoder().encode(str));
   function bytesToB64(bytes) { let bin = ''; for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000)); return btoa(bin); }
   const b64decText = (b64) => new TextDecoder().decode(Uint8Array.from(atob(b64.replace(/\s/g, '')), (c) => c.charCodeAt(0)));
+  const unb64 = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
+
+  /* ---------- password ⇄ token encryption (Web Crypto) ---------- */
+  async function deriveKey(password, salt, iterations) {
+    const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(password), 'PBKDF2', false, ['deriveKey']);
+    return crypto.subtle.deriveKey({ name: 'PBKDF2', salt, iterations, hash: 'SHA-256' }, base, { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']);
+  }
+  async function encryptToken(token, password) {
+    const salt = crypto.getRandomValues(new Uint8Array(16));
+    const iv = crypto.getRandomValues(new Uint8Array(12));
+    const key = await deriveKey(password, salt, KDF_ITERATIONS);
+    const data = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, new TextEncoder().encode(token));
+    return { v: 1, kdf: 'PBKDF2-SHA256', iterations: KDF_ITERATIONS, cipher: 'AES-256-GCM', salt: bytesToB64(salt), iv: bytesToB64(iv), data: bytesToB64(new Uint8Array(data)) };
+  }
+  async function decryptToken(k, password) {
+    const key = await deriveKey(password, unb64(k.salt), k.iterations);
+    const plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: unb64(k.iv) }, key, unb64(k.data));
+    return new TextDecoder().decode(plain);
+  }
+  async function fetchKeyFile() {
+    try {
+      const r = await fetch(`${KEY_URL}?cb=${Date.now()}`, { cache: 'no-store' });
+      if (!r.ok) return null;
+      const k = await r.json();
+      return k && k.data && k.salt && k.iv ? k : null;
+    } catch (e) { return null; }
+  }
 
   /* ---------- token (kept only in this browser) ---------- */
   const getToken = () => sessionStorage.getItem('dg_admin_token') || localStorage.getItem('dg_admin_token') || '';
@@ -214,8 +317,17 @@
       headers: { Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28', Authorization: `Bearer ${getToken()}`, ...(opts.body ? { 'Content-Type': 'application/json' } : {}) }
     });
     if (!res.ok) {
-      let msg = `GitHub error ${res.status}`;
-      try { msg += ': ' + (await res.json()).message; } catch (e) {}
+      let ghMsg = '';
+      try { ghMsg = (await res.json()).message || ''; } catch (e) {}
+      let msg = `GitHub error ${res.status}${ghMsg ? ': ' + ghMsg : ''}`;
+      // Fine-grained token that can read but not write (pending org approval, wrong owner,
+      // repo not selected, or Contents only read-only)
+      if (res.status === 403 && /personal access token|not accessible/i.test(ghMsg)) {
+        msg = 'Your GitHub token can read the website but is not allowed to save. On GitHub: '
+          + '1) if DarskeeWorks-Services requires approval, approve the token under Organization settings → Personal access tokens → Pending requests; '
+          + '2) the token\'s resource owner must be DarskeeWorks-Services; 3) repository access must include dgtechandload.com; '
+          + '4) Repository permissions → Contents must be "Read and write". Then Disconnect and connect again.';
+      }
       const err = new Error(msg); err.status = res.status; throw err;
     }
     return res.status === 204 ? null : res.json();
@@ -274,6 +386,7 @@
     panel.innerHTML = '<p class="muted">Loading…</p>';
     try {
       if (current === 'photos') await renderPhotos(panel);
+      else if (current === 'password') await renderPassword(panel);
       else await renderCollection(panel, current);
     } catch (e) { panel.innerHTML = `<div class="card"><p>${esc(e.message)}</p><button type="button" id="retry">Try again</button></div>`; $('#retry').onclick = () => renderPanel(); }
   }
@@ -388,14 +501,27 @@
   /* ---------- UI: product photos ---------- */
   let photoFilter = 'missing', photoSearch = '';
   const localPreviews = {}; // product name -> object URL of a just-uploaded photo
+
+  // Crop square, resize, upload the photo and point the product at it.
+  async function uploadProductPhoto(p, fileOrBlob) {
+    const img = await prepareImage(fileOrBlob, { max: 800, square: true });
+    const name = `${slug(p.name)}.${img.ext}`;
+    await putBinary(`docs/assets/products/${name}`, img.b64, `Admin: product photo for ${p.name}`);
+    p.image = name;
+    await saveJson(PRODUCTS_FILE, `Admin: set photo for ${p.name}`);
+    localPreviews[p.name] = img.preview;
+  }
+
   async function renderPhotos(panel) {
     const f = await loadJson(PRODUCTS_FILE);
     const products = f.data.products || [];
     const have = products.filter((p) => p.image).length;
     const list = products.filter((p) => (photoFilter === 'all' || !p.image) && p.name.toLowerCase().includes(photoSearch));
+    const missing = list.filter((p) => !p.image);
     panel.innerHTML = `<div class="card">
-      <h2>Product photos</h2>
-      <p class="muted">${have} of ${products.length} products have a photo. Tap “Add photo” to take a picture or choose one — it is cropped square, resized and published. Use photos of your own stock only.</p>
+      <div class="row" style="justify-content:space-between"><h2>Product photos</h2>
+        ${missing.length ? `<button type="button" class="orange" id="sessionBtn">📷 Start photo session (${missing.length})</button>` : ''}</div>
+      <p class="muted">${have} of ${products.length} products have a photo. <b>Take photo</b> opens the camera — fit the item inside the square and tap the shutter. A <b>photo session</b> goes through every product that still needs a photo, one after another. Use photos of your own stock only.</p>
       <div class="filters">
         <input type="search" id="pSearch" placeholder="Search products…" value="${esc(photoSearch)}">
         <select id="pFilter"><option value="missing" ${photoFilter === 'missing' ? 'selected' : ''}>Needs photo (${products.length - have})</option><option value="all" ${photoFilter === 'all' ? 'selected' : ''}>All products (${products.length})</option></select>
@@ -405,24 +531,31 @@
         return `<div class="item">
           ${src ? `<img src="${esc(src)}" alt="">` : '<span class="ph">no photo</span>'}
           <div class="info"><strong>${esc(p.name)}</strong><small>${esc(p.category)} · ${p.stock} in stock</small></div>
-          <label class="btn" style="margin:0">${p.image ? 'Replace' : 'Add photo'}<input type="file" accept="image/*" data-name="${esc(p.name)}" hidden></label>
-          ${p.image ? `<button type="button" class="danger" data-rm="${esc(p.name)}">Remove</button>` : ''}
+          <div class="row" style="gap:6px;justify-content:flex-end">
+            <button type="button" data-cam="${esc(p.name)}">📷 ${p.image ? 'Retake' : 'Take photo'}</button>
+            <label class="btn secondary-btn" style="margin:0" title="Choose a photo from your gallery or computer">Upload<input type="file" accept="image/*" data-name="${esc(p.name)}" hidden></label>
+            ${p.image ? `<button type="button" class="danger" data-rm="${esc(p.name)}">Remove</button>` : ''}
+          </div>
         </div>`;
       }).join('') || '<div class="empty">No products match.</div>'}</div>
     </div>`;
     $('#pSearch').oninput = (e) => { photoSearch = e.target.value.trim().toLowerCase(); renderPhotos(panel); $('#pSearch').focus(); $('#pSearch').setSelectionRange(99, 99); };
     $('#pFilter').onchange = (e) => { photoFilter = e.target.value; renderPhotos(panel); };
+    const done = () => renderPhotos(panel);
+    const sessionBtn = $('#sessionBtn');
+    if (sessionBtn) sessionBtn.onclick = () => openCamera(missing, 0, done);
+    panel.querySelectorAll('[data-cam]').forEach((b) => (b.onclick = () => {
+      const p = products.find((x) => x.name === b.dataset.cam);
+      // from a product that needs a photo, carry on through the rest of the list
+      const queue = p.image ? [p] : missing.slice(missing.indexOf(p));
+      openCamera(queue, 0, done);
+    }));
     panel.querySelectorAll('input[type=file][data-name]').forEach((input) => input.addEventListener('change', async () => {
       const file = input.files[0]; if (!file) return;
       const p = products.find((x) => x.name === input.dataset.name);
       const label = input.parentElement; label.textContent = 'Uploading…';
       try {
-        const img = await prepareImage(file, { max: 800, square: true });
-        const name = `${slug(p.name)}.${img.ext}`;
-        await putBinary(`docs/assets/products/${name}`, img.b64, `Admin: product photo for ${p.name}`);
-        p.image = name;
-        await saveJson(PRODUCTS_FILE, `Admin: set photo for ${p.name}`);
-        localPreviews[p.name] = img.preview;
+        await uploadProductPhoto(p, file);
         toast(`Photo added for ${p.name}. Live in about a minute.`);
       } catch (e) { toast(e.message, true); }
       renderPhotos(panel);
@@ -437,25 +570,190 @@
     }));
   }
 
-  /* ---------- connect / disconnect ---------- */
-  async function connect() {
+  /* ---------- camera: live viewfinder + photo session ---------- */
+  const cam = { stream: null, facing: 'environment', queue: [], i: 0, shot: null, saved: 0, onDone: null };
+  const camEl = (id) => document.getElementById(id);
+  function stopStream() { if (cam.stream) cam.stream.getTracks().forEach((t) => t.stop()); cam.stream = null; }
+  async function startStream() {
+    stopStream();
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { const e = new Error('No camera API'); e.name = 'NoCamera'; throw e; }
+    cam.stream = await navigator.mediaDevices.getUserMedia({ audio: false, video: { facingMode: { ideal: cam.facing }, width: { ideal: 1920 }, height: { ideal: 1920 } } });
+    const v = camEl('camVideo');
+    v.srcObject = cam.stream;
+    await v.play().catch(() => {});
+    camEl('camMsg').hidden = true; camEl('camSnap').disabled = false; camEl('camSwitch').hidden = false;
+  }
+  function camHeader() {
+    const p = cam.queue[cam.i];
+    camEl('camName').textContent = p ? p.name : '';
+    camEl('camStep').textContent = cam.queue.length > 1 ? `Photo ${cam.i + 1} of ${cam.queue.length} · ${p.category}` : (p ? p.category : '');
+    camEl('camSkip').hidden = cam.queue.length - cam.i <= 1;
+  }
+  function showLive() {
+    cam.shot = null;
+    camEl('camShot').hidden = true; camEl('camVideo').hidden = false;
+    camEl('camLive').hidden = false; camEl('camReview').hidden = true;
+    camEl('camUse').disabled = false; camEl('camUse').textContent = 'Use photo'; camEl('camRetake').disabled = false;
+    camHeader();
+  }
+  function showReview(blob) {
+    cam.shot = blob;
+    const img = camEl('camShot'); img.src = URL.createObjectURL(blob); img.hidden = false;
+    camEl('camVideo').hidden = true; camEl('camMsg').hidden = true;
+    camEl('camLive').hidden = true; camEl('camReview').hidden = false;
+  }
+  function cameraUnavailable(e) {
+    const denied = e && (e.name === 'NotAllowedError' || e.name === 'SecurityError');
+    camEl('camMsgText').textContent = denied
+      ? 'Camera access is blocked for this site. Allow the camera in your browser settings, or use your phone\'s camera app instead.'
+      : 'The live camera isn\'t available in this browser. Use your phone\'s camera app instead.';
+    camEl('camMsg').hidden = false; camEl('camSnap').disabled = true; camEl('camSwitch').hidden = true;
+  }
+  async function openCamera(queue, i, onDone) {
+    Object.assign(cam, { queue, i, onDone, saved: 0 });
+    camEl('camera').showModal();
+    showLive();
+    try { await startStream(); } catch (e) { cameraUnavailable(e); }
+  }
+  function closeCamera() {
+    stopStream();
+    if (camEl('camera').open) camEl('camera').close();
+    if (cam.queue.length > 1 && cam.saved) toast(`Photo session finished — ${cam.saved} photo${cam.saved === 1 ? '' : 's'} saved. Live in about a minute.`);
+    const done = cam.onDone; cam.onDone = null;
+    if (done) done();
+  }
+  function nextProduct() {
+    cam.i++;
+    if (cam.i >= cam.queue.length) return closeCamera();
+    showLive();
+    if (!cam.stream) startStream().catch(cameraUnavailable);
+  }
+  camEl('camSnap').onclick = () => {
+    const v = camEl('camVideo');
+    if (!v.videoWidth) return;
+    const s = Math.min(v.videoWidth, v.videoHeight); // centre square = what the viewfinder shows
+    const c = document.createElement('canvas'); c.width = c.height = s;
+    c.getContext('2d').drawImage(v, (v.videoWidth - s) / 2, (v.videoHeight - s) / 2, s, s, 0, 0, s, s);
+    c.toBlob((b) => b && showReview(b), 'image/jpeg', 0.92);
+  };
+  camEl('camRetake').onclick = () => { showLive(); if (!cam.stream) startStream().catch(cameraUnavailable); };
+  camEl('camUse').onclick = async () => {
+    const p = cam.queue[cam.i];
+    camEl('camUse').disabled = true; camEl('camRetake').disabled = true; camEl('camUse').textContent = 'Saving…';
+    try {
+      await uploadProductPhoto(p, cam.shot);
+      cam.saved++;
+      if (cam.queue.length === 1) toast(`Photo saved for ${p.name}. Live in about a minute.`);
+      else toast(`✓ ${p.name} saved`);
+      nextProduct();
+    } catch (e) {
+      toast(e.message, true);
+      camEl('camUse').disabled = false; camEl('camRetake').disabled = false; camEl('camUse').textContent = 'Use photo';
+    }
+  };
+  camEl('camSkip').onclick = nextProduct;
+  camEl('camSwitch').onclick = async () => {
+    cam.facing = cam.facing === 'environment' ? 'user' : 'environment';
+    try { await startStream(); } catch (e) { cameraUnavailable(e); }
+  };
+  camEl('camNativeBtn').onclick = () => camEl('camNative').click();
+  ['camFile', 'camNative'].forEach((id) => camEl(id).addEventListener('change', (e) => {
+    const file = e.target.files[0]; e.target.value = '';
+    if (file) showReview(file);
+  }));
+  camEl('camClose').onclick = closeCamera;
+  camEl('camera').addEventListener('cancel', (e) => { e.preventDefault(); closeCamera(); }); // Esc key
+  document.addEventListener('visibilitychange', () => { if (document.hidden && camEl('camera').open) stopStream(); else if (!document.hidden && camEl('camera').open && !cam.shot) startStream().catch(cameraUnavailable); });
+
+  /* ---------- UI: password login settings ---------- */
+  async function renderPassword(panel) {
+    const existing = !!(await fileSha(KEY_FILE)); // via GitHub, not the (slightly delayed) published copy
+    panel.innerHTML = `<div class="card">
+      <h2>Password login</h2>
+      <p class="muted">${existing ? '✓ Password login is <b>on</b>. ' : 'Password login is <b>off</b>. '}
+        Set a password to sign in without pasting your GitHub token. Your current token is encrypted with the password and saved to the website as <code>assets/admin-key.json</code> — only the encrypted version, never the password. Anyone with the password can edit the site, so use a long one that you don't use anywhere else.</p>
+      <form id="setPwForm">
+        <div class="grid2">
+          <div><label for="newPw">New password (at least 12 characters)</label><input id="newPw" type="password" autocomplete="new-password" minlength="12" required></div>
+          <div><label for="newPw2">Repeat password</label><input id="newPw2" type="password" autocomplete="new-password" minlength="12" required></div>
+        </div>
+        <div class="row" style="margin-top:14px"><button type="submit" id="setPwBtn">${existing ? 'Change password' : 'Turn on password login'}</button>
+        ${existing ? '<button type="button" class="danger" id="offPwBtn">Turn off password login</button>' : ''}</div>
+      </form>
+      <p class="hint" style="margin-top:12px">When your GitHub token expires, sign in with a new token and set the password again here.</p>
+    </div>`;
+    $('#setPwForm').onsubmit = async (ev) => {
+      ev.preventDefault();
+      const a = $('#newPw').value, b = $('#newPw2').value;
+      if (a.length < 12) return toast('Use at least 12 characters.', true);
+      if (a !== b) return toast('The two passwords don\'t match.', true);
+      const btn = $('#setPwBtn'); btn.disabled = true; btn.textContent = 'Encrypting…';
+      try {
+        const blob = await encryptToken(getToken(), a);
+        btn.textContent = 'Saving…';
+        await putBinary(KEY_FILE, b64encText(JSON.stringify(blob, null, 2) + '\n'), 'Admin: update encrypted admin key');
+        $('#newPw').value = ''; $('#newPw2').value = '';
+        toast('Password login is ready. It works in about a minute, on any device.');
+      } catch (e) { toast(e.message, true); }
+      renderPanel();
+    };
+    const off = $('#offPwBtn');
+    if (off) off.onclick = async () => {
+      if (!confirm('Turn off password login? You will need your GitHub token to sign in.')) return;
+      off.disabled = true;
+      try {
+        const sha = await fileSha(KEY_FILE);
+        if (sha) await gh(`contents/${KEY_FILE}`, { method: 'DELETE', body: JSON.stringify({ message: 'Admin: remove encrypted admin key', branch: REPO.branch, sha }) });
+        toast('Password login turned off.');
+      } catch (e) { toast(e.message, true); }
+      renderPanel();
+    };
+  }
+
+  /* ---------- sign in / out ---------- */
+  async function showSignIn() {
+    $('#app').hidden = true; $('#logoutBtn').hidden = true; $('#who').textContent = '';
+    const hasKey = !!(await fetchKeyFile());
+    $('#pwCard').hidden = !hasKey; $('#connectCard').hidden = hasKey;
+    (hasKey ? $('#pw') : $('#token')).focus();
+  }
+  async function connect(viaPassword) {
     const btn = $('#connectBtn'); btn.disabled = true; btn.textContent = 'Checking…';
     try {
       const repo = await gh();
       if (!repo.permissions || !repo.permissions.push) throw new Error('This token can read the repository but cannot save changes. Give it "Contents: Read and write" permission.');
-      $('#connectCard').hidden = true; $('#app').hidden = false; $('#logoutBtn').hidden = false;
+      $('#connectCard').hidden = true; $('#pwCard').hidden = true; $('#app').hidden = false; $('#logoutBtn').hidden = false;
       $('#who').textContent = `Connected to ${REPO.owner}/${REPO.repo}`;
       renderTabs(); renderPanel();
     } catch (e) {
       setToken('');
-      toast(e.status === 401 ? 'That token is not valid (or has expired).' : e.status === 404 ? 'This token has no access to the website repository.' : e.message, true);
+      const msg = e.status === 401 ? (viaPassword ? 'The saved GitHub token has expired. Sign in with a new token, then set the password again.' : 'That token is not valid (or has expired).')
+        : e.status === 404 ? 'This token has no access to the website repository.' : e.message;
+      toast(msg, true);
+      if (viaPassword && e.status === 401) { $('#pwCard').hidden = true; $('#connectCard').hidden = false; }
     }
     btn.disabled = false; btn.textContent = 'Connect';
   }
-  $('#connectBtn').onclick = () => { const t = $('#token').value.trim(); if (!t) return toast('Paste your token first.', true); setToken(t, $('#remember').checked); $('#token').value = ''; connect(); };
+  $('#connectBtn').onclick = () => { const t = $('#token').value.trim(); if (!t) return toast('Paste your token first.', true); setToken(t, $('#remember').checked); $('#token').value = ''; connect(false); };
   $('#token').addEventListener('keydown', (e) => { if (e.key === 'Enter') $('#connectBtn').click(); });
-  $('#logoutBtn').onclick = () => { setToken(''); location.reload(); };
-  if (getToken()) connect();
+  $('#pwForm').onsubmit = async (ev) => {
+    ev.preventDefault();
+    const btn = $('#pwBtn'); btn.disabled = true; btn.textContent = 'Signing in…';
+    try {
+      const k = await fetchKeyFile();
+      if (!k) throw new Error('Password login is not set up. Sign in with a GitHub token.');
+      let token;
+      try { token = await decryptToken(k, $('#pw').value); }
+      catch (e) { await new Promise((r) => setTimeout(r, 800)); throw new Error('Wrong password.'); }
+      $('#pw').value = '';
+      setToken(token, $('#pwRemember').checked);
+      await connect(true);
+    } catch (e) { toast(e.message, true); }
+    btn.disabled = false; btn.textContent = 'Sign in';
+  };
+  $('#useToken').onclick = (e) => { e.preventDefault(); $('#pwCard').hidden = true; $('#connectCard').hidden = false; $('#token').focus(); };
+  $('#logoutBtn').onclick = () => { setToken(''); Object.keys(files).forEach((k) => delete files[k]); showSignIn(); };
+  if (getToken()) connect(false); else showSignIn();
 })();
 </script>
 </body>
