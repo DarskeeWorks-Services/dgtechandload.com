@@ -532,7 +532,8 @@
       "name": "CASE IP 15 PLUS",
       "category": "Cases & Screen Protectors",
       "price": 200,
-      "stock": 1
+      "stock": 1,
+      "image": "case-ip-15-plus.webp"
     },
     {
       "name": "CASE IP 16",
