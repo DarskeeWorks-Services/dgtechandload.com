@@ -553,7 +553,8 @@
       "name": "CASE IP14 PRO",
       "category": "Cases & Screen Protectors",
       "price": 200,
-      "stock": 1
+      "stock": 1,
+      "image": "case-ip14-pro.webp"
     },
     {
       "name": "CASE IP15",
