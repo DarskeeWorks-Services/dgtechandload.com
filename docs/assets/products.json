@@ -799,7 +799,8 @@
       "name": "DITO WIFI",
       "category": "SIM & Load",
       "price": 1990,
-      "stock": 8
+      "stock": 8,
+      "image": "dito-wifi.webp"
     },
     {
       "name": "SIMCARD DITO",
