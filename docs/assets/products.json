@@ -497,7 +497,8 @@
       "name": "CASE IP 12 PRO MAX",
       "category": "Cases & Screen Protectors",
       "price": 200,
-      "stock": 1
+      "stock": 1,
+      "image": "case-ip-12-pro-max.webp"
     },
     {
       "name": "CASE IP 13",
