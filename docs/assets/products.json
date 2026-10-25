@@ -180,7 +180,8 @@
       "name": "HDMI 1.5M",
       "category": "Chargers & Cables",
       "price": 180,
-      "stock": 1
+      "stock": 1,
+      "image": "hdmi-1-5m.webp"
     },
     {
       "name": "K/TC CYS ULO CAR",
