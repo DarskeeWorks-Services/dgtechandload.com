@@ -861,7 +861,8 @@
       "name": "SANDISK MEMORY CARD 32GB",
       "category": "Memory & Storage",
       "price": 950,
-      "stock": 1
+      "stock": 1,
+      "image": "sandisk-memory-card-32gb.webp"
     },
     {
       "name": "SANDISK MEMORY CARD 64GB",
