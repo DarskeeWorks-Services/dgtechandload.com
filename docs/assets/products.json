@@ -938,7 +938,8 @@
       "name": "MOUSEPAD H-2",
       "category": "Computer Accessories",
       "price": 100,
-      "stock": 1
+      "stock": 1,
+      "image": "mousepad-h-2.webp"
     },
     {
       "name": "BATTERY BL-4C",
