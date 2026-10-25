@@ -187,7 +187,8 @@
       "name": "K/TC CYS ULO CAR",
       "category": "Chargers & Cables",
       "price": 150,
-      "stock": 1
+      "stock": 1,
+      "image": "k-tc-cys-ulo-car.webp"
     },
     {
       "name": "K/TC PP-081 CHARGER TC",
