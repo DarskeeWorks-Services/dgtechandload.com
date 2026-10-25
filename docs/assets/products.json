@@ -889,7 +889,8 @@
       "name": "SKONE MEMORY CARD 2GB",
       "category": "Memory & Storage",
       "price": 280,
-      "stock": 2
+      "stock": 2,
+      "image": "skone-memory-card-2gb.webp"
     },
     {
       "name": "SKONE MEMORY CARD 4GB",
