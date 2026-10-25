@@ -331,7 +331,8 @@
       "name": "BS-934 HEADSET",
       "category": "Audio",
       "price": 350,
-      "stock": 1
+      "stock": 1,
+      "image": "bs-934-headset.webp"
     },
     {
       "name": "BT-176 HEADSET",
