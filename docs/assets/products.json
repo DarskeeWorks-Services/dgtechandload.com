@@ -215,7 +215,8 @@
       "name": "K09 CABLE TC",
       "category": "Chargers & Cables",
       "price": 150,
-      "stock": 1
+      "stock": 1,
+      "image": "k09-cable-tc.webp"
     },
     {
       "name": "K65 4N1 CABLE",
