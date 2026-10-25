@@ -854,7 +854,8 @@
       "name": "CARD READER USB 32N1",
       "category": "Memory & Storage",
       "price": 150,
-      "stock": 1
+      "stock": 1,
+      "image": "card-reader-usb-32n1.webp"
     },
     {
       "name": "SANDISK MEMORY CARD 32GB",
