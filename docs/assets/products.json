@@ -380,7 +380,8 @@
       "name": "UNIVERSAL HEADSET",
       "category": "Audio",
       "price": 150,
-      "stock": 5
+      "stock": 5,
+      "image": "universal-headset.webp"
     },
     {
       "name": "P-BANK BISEN 10M",
