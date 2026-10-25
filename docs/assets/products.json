@@ -987,7 +987,8 @@
       "name": "MOTOR PHONE HOLDER",
       "category": "Accessories",
       "price": 350,
-      "stock": 5
+      "stock": 5,
+      "image": "motor-phone-holder.webp"
     },
     {
       "name": "SELFIE STICK",
