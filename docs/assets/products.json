@@ -55,7 +55,8 @@
       "name": "ALI CABLE TC",
       "category": "Chargers & Cables",
       "price": 180,
-      "stock": 2
+      "stock": 2,
+      "image": "ali-cable-tc.webp"
     },
     {
       "name": "ALI CC12 CAR 5G",
