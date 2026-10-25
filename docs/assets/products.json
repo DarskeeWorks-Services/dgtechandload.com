@@ -407,7 +407,8 @@
       "name": "P-BANK ROMOS 30M",
       "category": "Power Banks",
       "price": 2000,
-      "stock": 1
+      "stock": 1,
+      "image": "p-bank-romos-30m.webp"
     },
     {
       "name": "CASE 11 PRO MAX",
