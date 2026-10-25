@@ -434,7 +434,8 @@
       "name": "CASE A50",
       "category": "Cases & Screen Protectors",
       "price": 200,
-      "stock": 1
+      "stock": 1,
+      "image": "case-a50.webp"
     },
     {
       "name": "CASE C11 2021",
