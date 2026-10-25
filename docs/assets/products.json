@@ -518,7 +518,8 @@
       "name": "CASE IP 14",
       "category": "Cases & Screen Protectors",
       "price": 200,
-      "stock": 4
+      "stock": 4,
+      "image": "case-ip-14.webp"
     },
     {
       "name": "CASE IP 14 PRO MAX",
