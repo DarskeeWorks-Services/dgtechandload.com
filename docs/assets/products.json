@@ -201,7 +201,8 @@
       "name": "K/TC PP-081 CHARGER V8",
       "category": "Chargers & Cables",
       "price": 250,
-      "stock": 6
+      "stock": 6,
+      "image": "k-tc-pp-081-charger-v8.webp"
     },
     {
       "name": "K09 CABLE IOS/5G",
