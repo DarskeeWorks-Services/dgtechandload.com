@@ -145,7 +145,8 @@
       "name": "BISEN CABLE TC-TC",
       "category": "Chargers & Cables",
       "price": 180,
-      "stock": 3
+      "stock": 3,
+      "image": "bisen-cable-tc-tc.webp"
     },
     {
       "name": "BISEN CHARGER 590 TC",
