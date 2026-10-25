@@ -820,7 +820,8 @@
       "name": "SIMCARD SMART",
       "category": "SIM & Load",
       "price": 55,
-      "stock": 13
+      "stock": 13,
+      "image": "simcard-smart.webp"
     },
     {
       "name": "SIMCARD SMART RETAILER",
