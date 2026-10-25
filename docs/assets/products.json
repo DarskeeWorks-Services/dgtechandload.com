@@ -222,7 +222,8 @@
       "name": "K65 4N1 CABLE",
       "category": "Chargers & Cables",
       "price": 150,
-      "stock": 2
+      "stock": 2,
+      "image": "k65-4n1-cable.webp"
     },
     {
       "name": "MK-701 CHARGER V8",
