@@ -1,6 +1,14 @@
 {
   "_instructions": "Managed from the admin page. Every section is hidden on the website while its list is empty. sponsors / affiliations: name, logo (filename in docs/assets/partners/ or https:// URL), url, note. ads (paid sponsored placements, always labelled 'Sponsored'): title, text, image, url, advertiser, placement ('home' | 'products' | 'all'), validFrom / validUntil. affiliates (affiliate links, shown with a commission disclosure): title, text, image, url, network. Only list real, agreed partnerships.",
-  "sponsors": [],
+  "sponsors": [
+    {
+      "name": "Darskee Jlpt AI",
+      "logo": "darskee-jlpt-ai-1792905519938.webp",
+      "url": "https://jlpt.darskeeai.com",
+      "validFrom": "2026-10-25",
+      "validUntil": "2026-12-31"
+    }
+  ],
   "affiliations": [],
   "ads": [],
   "affiliates": []
