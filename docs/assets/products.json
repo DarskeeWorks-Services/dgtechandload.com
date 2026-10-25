@@ -317,7 +317,8 @@
       "name": "B-BTS 2409",
       "category": "Audio",
       "price": 850,
-      "stock": 1
+      "stock": 1,
+      "image": "b-bts-2409.webp"
     },
     {
       "name": "B-SPEAKER GTS 1456",
