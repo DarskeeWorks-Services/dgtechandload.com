@@ -980,7 +980,8 @@
       "name": "MIC STAND",
       "category": "Accessories",
       "price": 280,
-      "stock": 2
+      "stock": 2,
+      "image": "mic-stand.webp"
     },
     {
       "name": "MOTOR PHONE HOLDER",
