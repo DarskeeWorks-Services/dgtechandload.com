@@ -229,7 +229,8 @@
       "name": "MK-701 CHARGER V8",
       "category": "Chargers & Cables",
       "price": 250,
-      "stock": 3
+      "stock": 3,
+      "image": "mk-701-charger-v8.webp"
     },
     {
       "name": "OTG USB V8",
