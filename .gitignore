@@ -14,3 +14,11 @@ Thumbs.db
 # Env
 .env
 .env.local
+
+# Store system export (contains PINs, balances, costs, sales) — never commit
+data/
+*store-data*.json
+
+# Product photo workflow (originals + local checklist)
+photos-inbox/
+photo-checklist.html

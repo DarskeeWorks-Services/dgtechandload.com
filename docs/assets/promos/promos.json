@@ -1,5 +1,5 @@
 {
-  "_instructions": "HOW TO ADD A PROMO / NEWS POST:  1) Put the image file in this folder (docs/assets/promos/).  2) Add an entry to the 'promos' list below.  Fields: title (text), type ('product' | 'store' | 'news'), image (filename in this folder e.g. 'mypromo.jpg', OR a full https:// URL), date ('YYYY-MM-DD'), text (description), cta (optional button label). Newest dates show first. Delete the sample entries once you add your own.",
+  "_instructions": "HOW TO ADD A PROMO / NEWS POST:  1) Put the image file in this folder (docs/assets/promos/).  2) Add an entry to the 'promos' list below.  Fields: title (text), type ('product' | 'store' | 'news'), image (filename in this folder e.g. 'mypromo.jpg', OR a full https:// URL), date ('YYYY-MM-DD', posting date), text (description), cta (optional button label), validFrom / validUntil (optional 'YYYY-MM-DD' — the promo is hidden automatically before validFrom and after validUntil). Newest dates show first; the 2 newest also appear on the home page. The entries below are SAMPLES — replace them with real offers (or delete them) before going live.",
   "promos": [
     {
       "title": "₱500 OFF Selected Smartphones",
