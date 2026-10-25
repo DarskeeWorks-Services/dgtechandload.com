@@ -352,7 +352,8 @@
       "name": "J87 HEADSET",
       "category": "Audio",
       "price": 580,
-      "stock": 3
+      "stock": 3,
+      "image": "j87-headset.webp"
     },
     {
       "name": "K/HS V-PO57 HEADSET/PIN&5G",
