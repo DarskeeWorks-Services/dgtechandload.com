@@ -345,7 +345,8 @@
       "name": "FDT HEADSET",
       "category": "Audio",
       "price": 180,
-      "stock": 5
+      "stock": 5,
+      "image": "fdt-headset.webp"
     },
     {
       "name": "J87 HEADSET",
