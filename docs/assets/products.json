@@ -658,7 +658,8 @@
       "name": "CASE Y15S/Y15A",
       "category": "Cases & Screen Protectors",
       "price": 250,
-      "stock": 3
+      "stock": 3,
+      "image": "case-y15s-y15a.webp"
     },
     {
       "name": "CASE Y17S",
