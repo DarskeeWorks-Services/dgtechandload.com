@@ -966,7 +966,8 @@
       "name": "CAR HOLDER",
       "category": "Accessories",
       "price": 350,
-      "stock": 2
+      "stock": 2,
+      "image": "car-holder.webp"
     },
     {
       "name": "G3 RING LIGHT PK15",
