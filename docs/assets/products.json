@@ -1001,7 +1001,8 @@
       "name": "TRIPOD OCTOPOS",
       "category": "Accessories",
       "price": 200,
-      "stock": 2
+      "stock": 2,
+      "image": "tripod-octopos.webp"
     },
     {
       "name": "USB LIGHT",
