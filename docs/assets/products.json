@@ -827,7 +827,8 @@
       "name": "SIMCARD SMART RETAILER",
       "category": "SIM & Load",
       "price": 399,
-      "stock": 1
+      "stock": 1,
+      "image": "simcard-smart-retailer.webp"
     },
     {
       "name": "SIMCARD TM",
