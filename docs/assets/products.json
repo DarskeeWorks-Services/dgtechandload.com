@@ -762,7 +762,8 @@
       "name": "WIRE PROTECTOR",
       "category": "Cases & Screen Protectors",
       "price": 25,
-      "stock": 16
+      "stock": 16,
+      "image": "wire-protector.webp"
     },
     {
       "name": "CASE C25S",
