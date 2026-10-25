@@ -813,7 +813,8 @@
       "name": "SIMCARD GLOBE RETAILER",
       "category": "SIM & Load",
       "price": 70,
-      "stock": 1
+      "stock": 1,
+      "image": "simcard-globe-retailer.webp"
     },
     {
       "name": "SIMCARD SMART",
