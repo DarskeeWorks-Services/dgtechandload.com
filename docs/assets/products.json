@@ -834,7 +834,8 @@
       "name": "SIMCARD TM",
       "category": "SIM & Load",
       "price": 49,
-      "stock": 10
+      "stock": 10,
+      "image": "simcard-tm.webp"
     },
     {
       "name": "SIMCARD TNT",
