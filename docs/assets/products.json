@@ -400,7 +400,8 @@
       "name": "P-BANK ROMOS 10M",
       "category": "Power Banks",
       "price": 1350,
-      "stock": 1
+      "stock": 1,
+      "image": "p-bank-romos-10m.webp"
     },
     {
       "name": "P-BANK ROMOS 30M",
