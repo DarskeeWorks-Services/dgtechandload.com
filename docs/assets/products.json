@@ -588,7 +588,8 @@
       "name": "CASE RM NOTE154G",
       "category": "Cases & Screen Protectors",
       "price": 200,
-      "stock": 1
+      "stock": 1,
+      "image": "case-rm-note154g.webp"
     },
     {
       "name": "CASE S1 PRO",
