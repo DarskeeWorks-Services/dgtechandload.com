@@ -366,7 +366,8 @@
       "name": "K/HS VP 098 HEADSET",
       "category": "Audio",
       "price": 180,
-      "stock": 2
+      "stock": 2,
+      "image": "k-hs-vp-098-headset.webp"
     },
     {
       "name": "K/HS VP-057 TC HEADSET",
