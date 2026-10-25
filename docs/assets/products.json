@@ -208,7 +208,8 @@
       "name": "K09 CABLE IOS/5G",
       "category": "Chargers & Cables",
       "price": 150,
-      "stock": 2
+      "stock": 2,
+      "image": "k09-cable-ios-5g.webp"
     },
     {
       "name": "K09 CABLE TC",
