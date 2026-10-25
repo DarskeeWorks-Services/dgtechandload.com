@@ -665,7 +665,8 @@
       "name": "CASE Y17S",
       "category": "Cases & Screen Protectors",
       "price": 200,
-      "stock": 2
+      "stock": 2,
+      "image": "case-y17s.webp"
     },
     {
       "name": "CASE Y20i",
