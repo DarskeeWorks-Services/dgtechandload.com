@@ -994,7 +994,8 @@
       "name": "SELFIE STICK",
       "category": "Accessories",
       "price": 250,
-      "stock": 3
+      "stock": 3,
+      "image": "selfie-stick.webp"
     },
     {
       "name": "TRIPOD OCTOPOS",
