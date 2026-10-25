@@ -875,7 +875,8 @@
       "name": "SANDISK USB 32GB",
       "category": "Memory & Storage",
       "price": 950,
-      "stock": 2
+      "stock": 2,
+      "image": "sandisk-usb-32gb.webp"
     },
     {
       "name": "SANDISK USB 64GB",
