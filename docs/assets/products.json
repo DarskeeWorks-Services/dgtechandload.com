@@ -560,7 +560,8 @@
       "name": "CASE IP15",
       "category": "Cases & Screen Protectors",
       "price": 200,
-      "stock": 1
+      "stock": 1,
+      "image": "case-ip15.webp"
     },
     {
       "name": "CASE OP A15/A15S",
