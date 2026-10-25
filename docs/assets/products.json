@@ -338,7 +338,8 @@
       "name": "BT-176 HEADSET",
       "category": "Audio",
       "price": 550,
-      "stock": 2
+      "stock": 2,
+      "image": "bt-176-headset.webp"
     },
     {
       "name": "FDT HEADSET",
