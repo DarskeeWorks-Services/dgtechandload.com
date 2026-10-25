@@ -41,7 +41,8 @@
       "name": "ADAPTOR ORDINARY",
       "category": "Chargers & Cables",
       "price": 150,
-      "stock": 1
+      "stock": 1,
+      "image": "adaptor-ordinary.webp"
     },
     {
       "name": "ALI CABLE 5G",
