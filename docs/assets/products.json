@@ -476,7 +476,8 @@
       "name": "CASE I-XR",
       "category": "Cases & Screen Protectors",
       "price": 250,
-      "stock": 2
+      "stock": 2,
+      "image": "case-i-xr.webp"
     },
     {
       "name": "CASE IP 12",
