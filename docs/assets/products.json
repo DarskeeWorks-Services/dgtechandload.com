@@ -166,7 +166,8 @@
       "name": "CLIP CHARGER",
       "category": "Chargers & Cables",
       "price": 150,
-      "stock": 4
+      "stock": 4,
+      "image": "clip-charger.webp"
     },
     {
       "name": "DT-100 ADAPTOR",
