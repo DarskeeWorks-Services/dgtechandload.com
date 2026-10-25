@@ -748,7 +748,8 @@
       "name": "TEMPERED Y11",
       "category": "Cases & Screen Protectors",
       "price": 200,
-      "stock": 5
+      "stock": 5,
+      "image": "tempered-y11.webp"
     },
     {
       "name": "TEMPERED Y20/Y20i",
