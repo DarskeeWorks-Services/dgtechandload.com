@@ -6,8 +6,10 @@
      npm run sync -- path/to/DandG-store-data.json
 
    SECURITY: the export also contains PINs, cash/G-Cash balances, unit costs,
-   sales and expenses. Only the allow-listed fields below (name, selling price,
-   stock) are ever written to the website. Never commit or publish the export.
+   sales and expenses. Only the allow-listed fields below (name, category,
+   stock) are ever written to the website - prices are intentionally NOT
+   published. Never commit or publish the export.
+   Shopee links set per product in the admin are kept across syncs.
    ===================================================== */
 const fs = require('fs');
 const path = require('path');
@@ -44,6 +46,10 @@ const slug = (name) => name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^
 const photos = fs.existsSync(PHOTO_DIR) ? new Set(fs.readdirSync(PHOTO_DIR)) : new Set();
 const photoFor = (name) => ['webp', 'jpg', 'jpeg', 'png'].map((ext) => `${slug(name)}.${ext}`).find((f) => photos.has(f));
 
+// Keep per-product Shopee links that were set in the admin page.
+const previous = fs.existsSync(OUT) ? JSON.parse(fs.readFileSync(OUT, 'utf8')).products || [] : [];
+const shopeeLinks = new Map(previous.filter((p) => p.shopee).map((p) => [p.name, p.shopee]));
+
 const raw = JSON.parse(fs.readFileSync(src, 'utf8'));
 const inventory = (raw.data || raw).inventory;
 if (!Array.isArray(inventory)) throw new Error('No "inventory" list found in ' + src);
@@ -55,17 +61,17 @@ const products = inventory
     const item = {
       name,
       category: categoryOf(name),
-      price: Number(i.price),
       stock: Math.max(0, Number(i.remaining ?? i.stock) || 0)
     };
     const photo = photoFor(name);
     if (photo) item.image = photo;
+    if (shopeeLinks.has(name)) item.shopee = shopeeLinks.get(name);
     return item;
   })
   .sort((a, b) => ORDER.indexOf(a.category) - ORDER.indexOf(b.category) || (b.stock > 0) - (a.stock > 0) || a.name.localeCompare(b.name));
 
 const out = { updated: new Date().toISOString(), count: products.length, products };
-fs.writeFileSync(OUT, JSON.stringify(out, null, 1) + '\n');
+fs.writeFileSync(OUT, JSON.stringify(out, null, 2) + '\n'); // same format the admin page writes
 
 const byCat = products.reduce((m, p) => ((m[p.category] = (m[p.category] || 0) + 1), m), {});
 console.log(`Wrote ${products.length} products to docs/assets/products.json (${inventory.length - products.length} supplies/services skipped)`);

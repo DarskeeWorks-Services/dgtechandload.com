@@ -650,3 +650,10 @@ a.ad-card:hover { border-color: var(--blue); transform: translateY(-2px); }
   .ad-card__body { padding-right: 0; }
   .partner-logo { min-width: calc(50% - 6px); }
 }
+
+/* product Shopee link (set per product in the admin) */
+.product-card__shopee { grid-column: 1 / -1; }
+.mini-card__shopee { display: block; font-size: .72rem; font-weight: 600; color: #ee4d2d; margin-top: 2px; }
+@media (max-width: 520px) {
+  .product-card__actions { grid-template-columns: 1fr; }
+}

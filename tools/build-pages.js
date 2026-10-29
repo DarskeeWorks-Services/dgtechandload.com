@@ -138,13 +138,12 @@ const productModal = `<div class="modal" id="productModal" hidden>
       <div class="modal__body">
         <span class="modal__cat" id="modalCat"></span>
         <h3 id="modalName"></h3>
-        <p class="modal__price" id="modalPrice"></p>
         <p class="modal__desc" id="modalDesc"></p>
         <div class="modal__actions">
           <a class="btn btn--blue" id="modalMsgr" target="_blank" rel="noopener">${ic('messenger')} Messenger</a>
           <a class="btn btn--wa" id="modalWa" target="_blank" rel="noopener">${ic('chat')} WhatsApp</a>
           <a class="btn btn--ghost" id="modalCall" href="tel:${PHONE}">${ic('call')} Call</a>
-          <a class="btn btn--shopee modal__shopee" href="${SHOPEE}" data-shopee target="_blank" rel="noopener">${ic('shopee')} Order on Shopee</a>
+          <a class="btn btn--shopee modal__shopee" id="modalShopee" href="${SHOPEE}" target="_blank" rel="noopener">${ic('shopee')} <span id="modalShopeeLabel">Visit our Shopee store</span></a>
         </div>
       </div>
     </div>
@@ -349,7 +348,7 @@ PAGES.products = {
     <section class="page-head">
       <div class="container">
         <h1>Our Products</h1>
-        <p>Prices and stock from our store inventory.</p>
+        <p>See what's in stock at our store. Message us for prices, or buy on Shopee where available.</p>
         <p class="catalog-updated" id="catalogUpdated"></p>
         <div style="margin-top:18px">${shopeeBanner}</div>
         <div style="margin-top:20px">${brandsRow}</div>

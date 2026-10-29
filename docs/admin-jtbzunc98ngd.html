@@ -53,7 +53,7 @@
     .item { flex-wrap: wrap; }
     .item .info { flex: 1 1 0; }
     .item > .row { flex: 1 1 100%; justify-content: stretch !important; }
-    .item > .row > * { flex: 1 1 0; justify-content: center; }
+    .item > .row > * { flex: 1 1 40%; justify-content: center; }
     .item > button { flex: 1 1 calc(50% - 6px); justify-content: center; }
   }
   .item .info small { color: var(--muted); }
@@ -260,7 +260,7 @@
       ]
     }
   };
-  const TABS = [['promos', 'Promos'], ['sponsors', 'Sponsors'], ['affiliations', 'Affiliations'], ['ads', 'Sponsored ads'], ['affiliates', 'Affiliate links'], ['photos', 'Product photos'], ['password', 'Password login']];
+  const TABS = [['promos', 'Promos'], ['sponsors', 'Sponsors'], ['affiliations', 'Affiliations'], ['ads', 'Sponsored ads'], ['affiliates', 'Affiliate links'], ['photos', 'Products'], ['password', 'Password login']];
   const PRODUCTS_FILE = 'docs/assets/products.json';
   // Password login: the GitHub token is encrypted with the owner's password (AES-256-GCM,
   // key from PBKDF2-SHA256). Only the encrypted blob is published; the password is never stored.
@@ -524,25 +524,28 @@
     const f = await loadJson(PRODUCTS_FILE);
     const products = f.data.products || [];
     const have = products.filter((p) => p.image).length;
-    const list = products.filter((p) => (photoFilter === 'all' || !p.image) && p.name.toLowerCase().includes(photoSearch));
+    const noShopee = products.filter((p) => !p.shopee).length;
+    const keep = (p) => photoFilter === 'all' || (photoFilter === 'noshopee' ? !p.shopee : !p.image);
+    const list = products.filter((p) => keep(p) && p.name.toLowerCase().includes(photoSearch));
     const missing = list.filter((p) => !p.image);
     panel.innerHTML = `<div class="card">
-      <div class="row" style="justify-content:space-between"><h2>Product photos</h2>
+      <div class="row" style="justify-content:space-between"><h2>Products — photos &amp; Shopee links</h2>
         ${missing.length ? `<button type="button" class="orange" id="sessionBtn">📷 Start photo session (${missing.length})</button>` : ''}</div>
-      <p class="muted">${have} of ${products.length} products have a photo. <b>Take photo</b> opens the camera — fit the item inside the square and tap the shutter. A <b>photo session</b> goes through every product that still needs a photo, one after another. Use photos of your own stock only.</p>
+      <p class="muted">${have} of ${products.length} products have a photo. <b>Take photo</b> opens the camera — fit the item inside the square and tap the shutter. A <b>photo session</b> goes through every product that still needs a photo, one after another. Use photos of your own stock only. <b>🛒 Shopee link</b>: open the product in the Shopee app → Share → Copy link, then paste it here — the website then shows a “Buy on Shopee” button for that product. Prices are not shown on the website.</p>
       <div class="filters">
         <input type="search" id="pSearch" placeholder="Search products…" value="${esc(photoSearch)}">
-        <select id="pFilter"><option value="missing" ${photoFilter === 'missing' ? 'selected' : ''}>Needs photo (${products.length - have})</option><option value="all" ${photoFilter === 'all' ? 'selected' : ''}>All products (${products.length})</option></select>
+        <select id="pFilter"><option value="missing" ${photoFilter === 'missing' ? 'selected' : ''}>Needs photo (${products.length - have})</option><option value="noshopee" ${photoFilter === 'noshopee' ? 'selected' : ''}>No Shopee link (${noShopee})</option><option value="all" ${photoFilter === 'all' ? 'selected' : ''}>All products (${products.length})</option></select>
       </div>
       <div id="pList">${list.slice(0, 200).map((p) => {
         const src = localPreviews[p.name] || (p.image ? `assets/products/${p.image}` : null);
         return `<div class="item">
           ${src ? `<img src="${esc(src)}" alt="">` : '<span class="ph">no photo</span>'}
-          <div class="info"><strong>${esc(p.name)}</strong><small>${esc(p.category)} · ${p.stock} in stock</small></div>
+          <div class="info"><strong>${esc(p.name)}</strong><small>${esc(p.category)} · ${p.stock} in stock${p.shopee ? ' · <span style="color:#ff7a59">Shopee ✓</span>' : ''}</small></div>
           <div class="row" style="gap:6px;justify-content:flex-end">
             <button type="button" data-cam="${esc(p.name)}">📷 ${p.image ? 'Retake' : 'Take photo'}</button>
             <label class="btn secondary-btn" style="margin:0" title="Choose a photo from your gallery or computer">Upload<input type="file" accept="image/*" data-name="${esc(p.name)}" hidden></label>
-            ${p.image ? `<button type="button" class="danger" data-rm="${esc(p.name)}">Remove</button>` : ''}
+            <button type="button" class="secondary" data-shop="${esc(p.name)}">🛒 ${p.shopee ? 'Edit Shopee link' : 'Add Shopee link'}</button>
+            ${p.image ? `<button type="button" class="danger" data-rm="${esc(p.name)}">Remove photo</button>` : ''}
           </div>
         </div>`;
       }).join('') || '<div class="empty">No products match.</div>'}</div>
@@ -568,6 +571,7 @@
       } catch (e) { toast(e.message, true); }
       renderPhotos(panel);
     }));
+    panel.querySelectorAll('[data-shop]').forEach((b) => (b.onclick = () => openShopeeEditor(products.find((x) => x.name === b.dataset.shop), done)));
     panel.querySelectorAll('[data-rm]').forEach((b) => (b.onclick = async () => {
       const p = products.find((x) => x.name === b.dataset.rm);
       if (!confirm(`Remove the photo from "${p.name}"?`)) return;
@@ -576,6 +580,45 @@
       try { await saveJson(PRODUCTS_FILE, `Admin: remove photo for ${p.name}`); toast('Photo removed.'); } catch (e) { toast(e.message, true); }
       renderPhotos(panel);
     }));
+  }
+
+  /* ---------- per-product Shopee link ---------- */
+  const SHOPEE_HOSTS = /(^|\.)(shopee\.ph|shopee\.com|shp\.ee|collshp\.com)$/i;
+  function openShopeeEditor(p, onDone) {
+    const dlg = $('#editor'); const form = $('#editorForm');
+    form.innerHTML = `<h2>Shopee link</h2>
+      <p class="muted" style="margin:0 0 6px"><b>${esc(p.name)}</b></p>
+      <label for="shopUrl">Shopee product link</label>
+      <input id="shopUrl" type="url" inputmode="url" placeholder="https://shopee.ph/…  or  https://s.shopee.ph/…" value="${esc(p.shopee || '')}" required>
+      <div class="hint">In the Shopee app: open the product → <b>Share</b> → <b>Copy link</b>, then paste it here.</div>
+      <div class="row" style="margin-top:16px;justify-content:flex-end">
+        ${p.shopee ? '<button type="button" class="danger" id="shopRemove">Remove link</button>' : ''}
+        <button type="button" class="secondary" id="shopCancel">Cancel</button>
+        <button type="submit" id="shopSave">Save &amp; publish</button>
+      </div>`;
+    const finish = () => { dlg.close(); onDone(); };
+    $('#shopCancel').onclick = () => dlg.close();
+    const save = async (url, message) => {
+      const btns = form.querySelectorAll('button'); btns.forEach((x) => (x.disabled = true));
+      const before = p.shopee;
+      if (url) p.shopee = url; else delete p.shopee;
+      try { await saveJson(PRODUCTS_FILE, message); toast(url ? `Shopee link saved for ${p.name}. Live in about a minute.` : 'Shopee link removed.'); finish(); }
+      catch (e) { if (before) p.shopee = before; else delete p.shopee; toast(e.message, true); btns.forEach((x) => (x.disabled = false)); }
+    };
+    if ($('#shopRemove')) $('#shopRemove').onclick = () => { if (confirm(`Remove the Shopee link from "${p.name}"?`)) save(null, `Admin: remove Shopee link for ${p.name}`); };
+    form.onsubmit = (ev) => {
+      ev.preventDefault();
+      // Shopee "Copy link" text can include words around the URL — keep just the link
+      const raw = $('#shopUrl').value.trim();
+      const found = raw.match(/https?:\/\/\S+/i);
+      const url = (found ? found[0] : raw).replace(/^http:/i, 'https:');
+      let host = '';
+      try { host = new URL(url).hostname; } catch (e) { return toast('That is not a valid link. Paste the full link starting with https://', true); }
+      if (!SHOPEE_HOSTS.test(host) && !confirm(`"${host}" doesn't look like a Shopee link. Save it anyway?`)) return;
+      save(url, `Admin: set Shopee link for ${p.name}`);
+    };
+    dlg.showModal();
+    $('#shopUrl').focus();
   }
 
   /* ---------- camera: live viewfinder + photo session ---------- */

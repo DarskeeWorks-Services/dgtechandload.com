@@ -54,7 +54,8 @@
   /* -------- PRODUCT CATALOG --------
      Read from assets/products.json, generated from the store system export by
      `npm run sync` (tools/sync-products.js). That file only holds public fields:
-     name, category, selling price, stock and an optional photo filename. */
+     name, category, stock, an optional photo filename and an optional Shopee
+     product link (set from the admin). Prices are intentionally not published. */
   const CATALOG_URL = 'assets/products.json';
   let products = [];
   let catalogUpdated = null;
@@ -75,7 +76,6 @@
     if (p.img) return `<img class="${cls}" src="${esc(p.img)}" alt="${alt ? esc(p.name) : ''}" loading="lazy" onerror="this.src='${esc(p.art)}';this.classList.add('is-illus');this.alt=''">`;
     return `<img class="${cls} is-illus" src="${esc(p.art)}" alt="" loading="lazy">`;
   }
-  const peso = (v) => '₱' + Number(v).toLocaleString('en-PH');
   // Optional photo: a filename in assets/products/ (or a full URL).
   const resolveImg = (image) => (!image ? null : /^https?:\/\//i.test(image) ? image : `assets/products/${encodeURIComponent(image)}`);
 
@@ -199,11 +199,11 @@
           </div>
           <div class="product-card__body">
             <h2 class="product-card__name">${esc(p.name)}</h2>
-            <p class="product-card__price">${esc(p.price)}</p>
             ${stockBadge(p.remaining)}
             <div class="product-card__actions">
               <button type="button" class="btn btn--blue btn--sm" data-idx="${idx}">Details</button>
               <a class="btn btn--ghost btn--sm" href="${esc(msgrInquiry(p.name))}" target="_blank" rel="noopener" aria-label="Inquire about ${esc(p.name)} on Messenger">${icon('messenger')} Inquire</a>
+              ${p.shopee ? `<a class="btn btn--shopee btn--sm product-card__shopee" href="${esc(p.shopee)}" target="_blank" rel="noopener" aria-label="Buy ${esc(p.name)} on Shopee">${icon('shopee')} Buy on Shopee</a>` : ''}
             </div>
           </div>
         </article>`;
@@ -225,13 +225,13 @@
       .slice(0, 5);
     if (!picks.length) { wrap.innerHTML = '<p class="catalog-empty">New stock is on the way — message us to check availability.</p>'; return; }
     wrap.innerHTML = picks.map((p) => `
-      <button type="button" class="mini-card" data-idx="${products.indexOf(p)}" aria-label="View ${esc(p.name)}, ${esc(p.price)}">
+      <button type="button" class="mini-card" data-idx="${products.indexOf(p)}" aria-label="View ${esc(p.name)}">
         <span class="mini-card__media">
           ${productMedia(p, 'mini-card__img', false)}
         </span>
         <span class="mini-card__body">
           <span class="mini-card__name">${esc(p.name)}</span>
-          <span class="mini-card__price">${esc(p.price)}</span>
+          ${p.shopee ? '<span class="mini-card__shopee">Available on Shopee</span>' : ''}
         </span>
       </button>`).join('');
     $$('.mini-card', wrap).forEach((b) => b.addEventListener('click', () => openModal(products[+b.dataset.idx], b)));
@@ -254,8 +254,11 @@
       (p.img ? '' : '<span class="media-note">Photo coming soon</span>');
     $('#modalCat').textContent = p.category;
     $('#modalName').textContent = p.name;
-    $('#modalPrice').textContent = p.price;
     fillModalStock(p);
+    // product's own Shopee listing when the admin has set one, otherwise the Shopee store
+    const shop = $('#modalShopee');
+    shop.href = p.shopee || CONFIG.shopee;
+    $('#modalShopeeLabel').textContent = p.shopee ? 'Buy this on Shopee' : 'Visit our Shopee store';
     $('#modalMsgr').href = msgrInquiry(p.name);
     $('#modalWa').href = waInquiry(p.name);
     $('#modalCall').href = 'tel:' + CONFIG.phone;
@@ -281,12 +284,12 @@
     catalogUpdated = data.updated || null;
     return (data.products || []).map((r) => ({
       name: r.name,
-      price: peso(r.price),
       remaining: Math.max(0, Number(r.stock) || 0),
       category: r.category || 'Accessories',
       icon: CATEGORY_ICONS[r.category] || 'bag',
       art: `assets/categories/${CATEGORY_ART[r.category] || 'accessories'}.svg`,
-      img: resolveImg(r.image)
+      img: resolveImg(r.image),
+      shopee: /^https:\/\//i.test(r.shopee || '') ? r.shopee : null
     }));
   }
 
@@ -309,7 +312,7 @@
       // keep an open modal's stock in sync with the latest record
       if (openName) {
         const p = products.find((x) => x.name === openName);
-        if (p) { $('#modalPrice').textContent = p.price; fillModalStock(p); }
+        if (p) fillModalStock(p);
       }
     } catch (err) {
       if (!products.length) {

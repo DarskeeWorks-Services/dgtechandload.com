@@ -5,1010 +5,864 @@
     {
       "name": "CELLPHONE ITEL2165",
       "category": "Phones & Tablets",
-      "price": 750,
       "stock": 3,
       "image": "cellphone-itel2165.webp"
     },
     {
       "name": "CELLPHONE Y55",
       "category": "Phones & Tablets",
-      "price": 2598,
       "stock": 1,
       "image": "cellphone-y55.webp"
     },
     {
       "name": "CELLPHONE Y66",
       "category": "Phones & Tablets",
-      "price": 3198,
       "stock": 2,
       "image": "cellphone-y66.webp"
     },
     {
       "name": "FOLDING DESKTOP PHONE",
       "category": "Phones & Tablets",
-      "price": 250,
       "stock": 2,
       "image": "folding-desktop-phone.webp"
     },
     {
       "name": "SPARK PRO TAB",
       "category": "Phones & Tablets",
-      "price": 5798,
       "stock": 5,
       "image": "spark-pro-tab.webp"
     },
     {
       "name": "ADAPTOR ORDINARY",
       "category": "Chargers & Cables",
-      "price": 150,
       "stock": 1,
       "image": "adaptor-ordinary.webp"
     },
     {
       "name": "ALI CABLE 5G",
       "category": "Chargers & Cables",
-      "price": 180,
       "stock": 5,
       "image": "ali-cable-5g.webp"
     },
     {
       "name": "ALI CABLE TC",
       "category": "Chargers & Cables",
-      "price": 180,
       "stock": 2,
       "image": "ali-cable-tc.webp"
     },
     {
       "name": "ALI CC12 CAR 5G",
       "category": "Chargers & Cables",
-      "price": 280,
       "stock": 1,
       "image": "ali-cc12-car-5g.webp"
     },
     {
       "name": "Ali CC12 CAR V8",
       "category": "Chargers & Cables",
-      "price": 280,
       "stock": 1,
       "image": "ali-cc12-car-v8.webp"
     },
     {
       "name": "ALI CHARGER 5G",
       "category": "Chargers & Cables",
-      "price": 350,
       "stock": 1,
       "image": "ali-charger-5g.webp"
     },
     {
       "name": "ALI CHARGER TC",
       "category": "Chargers & Cables",
-      "price": 350,
       "stock": 4,
       "image": "ali-charger-tc.webp"
     },
     {
       "name": "ALI-3618 25W ULO",
       "category": "Chargers & Cables",
-      "price": 320,
       "stock": 2,
       "image": "ali-3618-25w-ulo.webp"
     },
     {
       "name": "AUX CABLE",
       "category": "Chargers & Cables",
-      "price": 100,
       "stock": 2,
       "image": "aux-cable.webp"
     },
     {
       "name": "BISEN 676 CHARGER 5G",
       "category": "Chargers & Cables",
-      "price": 250,
       "stock": 4,
       "image": "bisen-676-charger-5g.webp"
     },
     {
       "name": "BISEN 676 CHARGER TC",
       "category": "Chargers & Cables",
-      "price": 250,
       "stock": 5,
       "image": "bisen-676-charger-tc.webp"
     },
     {
       "name": "BISEN BC-365 ULO",
       "category": "Chargers & Cables",
-      "price": 180,
       "stock": 6,
       "image": "bisen-bc-365-ulo.webp"
     },
     {
       "name": "BISEN BU-168 3N1",
       "category": "Chargers & Cables",
-      "price": 280,
       "stock": 1,
       "image": "bisen-bu-168-3n1.webp"
     },
     {
       "name": "BISEN BU-199 CABLE 5G",
       "category": "Chargers & Cables",
-      "price": 150,
       "stock": 1,
       "image": "bisen-bu-199-cable-5g.webp"
     },
     {
       "name": "BISEN BU-199 CABLE TC",
       "category": "Chargers & Cables",
-      "price": 150,
       "stock": 1,
       "image": "bisen-bu-199-cable-tc.webp"
     },
     {
       "name": "BISEN CABLE TC-TC",
       "category": "Chargers & Cables",
-      "price": 180,
       "stock": 3,
       "image": "bisen-cable-tc-tc.webp"
     },
     {
       "name": "BISEN CHARGER 590 TC",
       "category": "Chargers & Cables",
-      "price": 280,
       "stock": 2,
       "image": "bisen-charger-590-tc.webp"
     },
     {
       "name": "BOSCA JY-835 12V",
       "category": "Chargers & Cables",
-      "price": 250,
       "stock": 1,
       "image": "bosca-jy-835-12v.webp"
     },
     {
       "name": "CLIP CHARGER",
       "category": "Chargers & Cables",
-      "price": 150,
       "stock": 4,
       "image": "clip-charger.webp"
     },
     {
       "name": "DT-100 ADAPTOR",
       "category": "Chargers & Cables",
-      "price": 150,
       "stock": 2,
       "image": "dt-100-adaptor.webp"
     },
     {
       "name": "HDMI 1.5M",
       "category": "Chargers & Cables",
-      "price": 180,
       "stock": 1,
       "image": "hdmi-1-5m.webp"
     },
     {
       "name": "K/TC CYS ULO CAR",
       "category": "Chargers & Cables",
-      "price": 150,
       "stock": 1,
       "image": "k-tc-cys-ulo-car.webp"
     },
     {
       "name": "K/TC PP-081 CHARGER TC",
       "category": "Chargers & Cables",
-      "price": 250,
       "stock": 3,
       "image": "k-tc-pp-081-charger-tc.webp"
     },
     {
       "name": "K/TC PP-081 CHARGER V8",
       "category": "Chargers & Cables",
-      "price": 250,
       "stock": 6,
       "image": "k-tc-pp-081-charger-v8.webp"
     },
     {
       "name": "K09 CABLE IOS/5G",
       "category": "Chargers & Cables",
-      "price": 150,
       "stock": 2,
       "image": "k09-cable-ios-5g.webp"
     },
     {
       "name": "K09 CABLE TC",
       "category": "Chargers & Cables",
-      "price": 150,
       "stock": 1,
       "image": "k09-cable-tc.webp"
     },
     {
       "name": "K65 4N1 CABLE",
       "category": "Chargers & Cables",
-      "price": 150,
       "stock": 2,
       "image": "k65-4n1-cable.webp"
     },
     {
       "name": "MK-701 CHARGER V8",
       "category": "Chargers & Cables",
-      "price": 250,
       "stock": 3,
       "image": "mk-701-charger-v8.webp"
     },
     {
       "name": "OTG USB V8",
       "category": "Chargers & Cables",
-      "price": 150,
       "stock": 1,
       "image": "otg-usb-v8.webp"
     },
     {
       "name": "PP-IOS CHARGER",
       "category": "Chargers & Cables",
-      "price": 250,
       "stock": 2,
       "image": "pp-ios-charger.webp"
     },
     {
       "name": "REMAX CABLE 5G",
       "category": "Chargers & Cables",
-      "price": 150,
       "stock": 8,
       "image": "remax-cable-5g.webp"
     },
     {
       "name": "REMAX CABLE TC",
       "category": "Chargers & Cables",
-      "price": 150,
       "stock": 2,
       "image": "remax-cable-tc.webp"
     },
     {
       "name": "V-POWER C131 37W/TC",
       "category": "Chargers & Cables",
-      "price": 380,
       "stock": 1,
       "image": "v-power-c131-37w-tc.webp"
     },
     {
       "name": "V-POWER C135 30W ULO",
       "category": "Chargers & Cables",
-      "price": 280,
       "stock": 1,
       "image": "v-power-c135-30w-ulo.webp"
     },
     {
       "name": "VP-U33 CABLE TC-TC",
       "category": "Chargers & Cables",
-      "price": 180,
       "stock": 3,
       "image": "vp-u33-cable-tc-tc.webp"
     },
     {
       "name": "VPOWER CO12 CAR CHARGER V8",
       "category": "Chargers & Cables",
-      "price": 250,
       "stock": 1,
       "image": "vpower-co12-car-charger-v8.webp"
     },
     {
       "name": "ALI CHARGER V8",
       "category": "Chargers & Cables",
-      "price": 350,
       "stock": 0
     },
     {
       "name": "PP13 CHARGER 5G",
       "category": "Chargers & Cables",
-      "price": 250,
       "stock": 0
     },
     {
       "name": "VPOWER CABLE VP-U07 V8",
       "category": "Chargers & Cables",
-      "price": 150,
       "stock": 0
     },
     {
       "name": "ALI BT250 HEADSET",
       "category": "Audio",
-      "price": 680,
       "stock": 1,
       "image": "ali-bt250-headset.webp"
     },
     {
       "name": "B-BTS 2409",
       "category": "Audio",
-      "price": 850,
       "stock": 1,
       "image": "b-bts-2409.webp"
     },
     {
       "name": "B-SPEAKER GTS 1456",
       "category": "Audio",
-      "price": 380,
       "stock": 2,
       "image": "b-speaker-gts-1456.webp"
     },
     {
       "name": "BS-934 HEADSET",
       "category": "Audio",
-      "price": 350,
       "stock": 1,
       "image": "bs-934-headset.webp"
     },
     {
       "name": "BT-176 HEADSET",
       "category": "Audio",
-      "price": 550,
       "stock": 2,
       "image": "bt-176-headset.webp"
     },
     {
       "name": "FDT HEADSET",
       "category": "Audio",
-      "price": 180,
       "stock": 5,
       "image": "fdt-headset.webp"
     },
     {
       "name": "J87 HEADSET",
       "category": "Audio",
-      "price": 580,
       "stock": 3,
       "image": "j87-headset.webp"
     },
     {
       "name": "K/HS V-PO57 HEADSET/PIN&5G",
       "category": "Audio",
-      "price": 250,
       "stock": 2,
       "image": "k-hs-v-po57-headset-pin-5g.webp"
     },
     {
       "name": "K/HS VP 098 HEADSET",
       "category": "Audio",
-      "price": 180,
       "stock": 2,
       "image": "k-hs-vp-098-headset.webp"
     },
     {
       "name": "K/HS VP-057 TC HEADSET",
       "category": "Audio",
-      "price": 250,
       "stock": 4,
       "image": "k-hs-vp-057-tc-headset.webp"
     },
     {
       "name": "UNIVERSAL HEADSET",
       "category": "Audio",
-      "price": 150,
       "stock": 5,
       "image": "universal-headset.webp"
     },
     {
       "name": "P-BANK BISEN 10M",
       "category": "Power Banks",
-      "price": 680,
       "stock": 1
     },
     {
       "name": "P-BANK BISEN 20M",
       "category": "Power Banks",
-      "price": 1150,
       "stock": 1,
       "image": "p-bank-bisen-20m.webp"
     },
     {
       "name": "P-BANK ROMOS 10M",
       "category": "Power Banks",
-      "price": 1350,
       "stock": 1,
       "image": "p-bank-romos-10m.webp"
     },
     {
       "name": "P-BANK ROMOS 30M",
       "category": "Power Banks",
-      "price": 2000,
       "stock": 1,
       "image": "p-bank-romos-30m.webp"
     },
     {
       "name": "CASE 11 PRO MAX",
       "category": "Cases & Screen Protectors",
-      "price": 250,
       "stock": 1,
       "image": "case-11-pro-max.webp"
     },
     {
       "name": "CASE 13 PRO",
       "category": "Cases & Screen Protectors",
-      "price": 200,
       "stock": 2
     },
     {
       "name": "CASE 15 PRO MAX",
       "category": "Cases & Screen Protectors",
-      "price": 200,
       "stock": 1,
       "image": "case-15-pro-max.webp"
     },
     {
       "name": "CASE A50",
       "category": "Cases & Screen Protectors",
-      "price": 200,
       "stock": 1,
       "image": "case-a50.webp"
     },
     {
       "name": "CASE C11 2021",
       "category": "Cases & Screen Protectors",
-      "price": 250,
       "stock": 1,
       "image": "case-c11-2021.webp"
     },
     {
       "name": "CASE CAMON 40 PRO",
       "category": "Cases & Screen Protectors",
-      "price": 250,
       "stock": 1,
       "image": "case-camon-40-pro.webp"
     },
     {
       "name": "CASE HOT 11S INFINIX",
       "category": "Cases & Screen Protectors",
-      "price": 200,
       "stock": 4,
       "image": "case-hot-11s-infinix.webp"
     },
     {
       "name": "CASE HOT 60I 4G",
       "category": "Cases & Screen Protectors",
-      "price": 250,
       "stock": 1,
       "image": "case-hot-60i-4g.webp"
     },
     {
       "name": "CASE I -16 PRO",
       "category": "Cases & Screen Protectors",
-      "price": 200,
       "stock": 1,
       "image": "case-i-16-pro.webp"
     },
     {
       "name": "CASE I-XR",
       "category": "Cases & Screen Protectors",
-      "price": 250,
       "stock": 2,
       "image": "case-i-xr.webp"
     },
     {
       "name": "CASE IP 12",
       "category": "Cases & Screen Protectors",
-      "price": 200,
       "stock": 1,
       "image": "case-ip-12.webp"
     },
     {
       "name": "CASE IP 12 PRO",
       "category": "Cases & Screen Protectors",
-      "price": 200,
       "stock": 1,
       "image": "case-ip-12-pro.webp"
     },
     {
       "name": "CASE IP 12 PRO MAX",
       "category": "Cases & Screen Protectors",
-      "price": 200,
       "stock": 1,
       "image": "case-ip-12-pro-max.webp"
     },
     {
       "name": "CASE IP 13",
       "category": "Cases & Screen Protectors",
-      "price": 200,
       "stock": 7,
       "image": "case-ip-13.webp"
     },
     {
       "name": "Case ip 13 pro max",
       "category": "Cases & Screen Protectors",
-      "price": 200,
       "stock": 2,
       "image": "case-ip-13-pro-max.webp"
     },
     {
       "name": "CASE IP 14",
       "category": "Cases & Screen Protectors",
-      "price": 200,
       "stock": 4,
       "image": "case-ip-14.webp"
     },
     {
       "name": "CASE IP 14 PRO MAX",
       "category": "Cases & Screen Protectors",
-      "price": 200,
       "stock": 1,
       "image": "case-ip-14-pro-max.webp"
     },
     {
       "name": "CASE IP 15 PLUS",
       "category": "Cases & Screen Protectors",
-      "price": 200,
       "stock": 1,
       "image": "case-ip-15-plus.webp"
     },
     {
       "name": "CASE IP 16",
       "category": "Cases & Screen Protectors",
-      "price": 200,
       "stock": 1,
       "image": "case-ip-16.webp"
     },
     {
       "name": "CASE IP IX MAX",
       "category": "Cases & Screen Protectors",
-      "price": 250,
       "stock": 1,
       "image": "case-ip-ix-max.webp"
     },
     {
       "name": "CASE IP14 PRO",
       "category": "Cases & Screen Protectors",
-      "price": 200,
       "stock": 1,
       "image": "case-ip14-pro.webp"
     },
     {
       "name": "CASE IP15",
       "category": "Cases & Screen Protectors",
-      "price": 200,
       "stock": 1,
       "image": "case-ip15.webp"
     },
     {
       "name": "CASE OP A15/A15S",
       "category": "Cases & Screen Protectors",
-      "price": 200,
       "stock": 6,
       "image": "case-op-a15-a15s.webp"
     },
     {
       "name": "CASE OPPO A3S",
       "category": "Cases & Screen Protectors",
-      "price": 250,
       "stock": 4,
       "image": "case-oppo-a3s.webp"
     },
     {
       "name": "CASE OPPO A5S",
       "category": "Cases & Screen Protectors",
-      "price": 200,
       "stock": 3,
       "image": "case-oppo-a5s.webp"
     },
     {
       "name": "CASE RM NOTE154G",
       "category": "Cases & Screen Protectors",
-      "price": 200,
       "stock": 1,
       "image": "case-rm-note154g.webp"
     },
     {
       "name": "CASE S1 PRO",
       "category": "Cases & Screen Protectors",
-      "price": 200,
       "stock": 5,
       "image": "case-s1-pro.webp"
     },
     {
       "name": "CASE SAM A11",
       "category": "Cases & Screen Protectors",
-      "price": 200,
       "stock": 1,
       "image": "case-sam-a11.webp"
     },
     {
       "name": "CASE SAM A25 5G",
       "category": "Cases & Screen Protectors",
-      "price": 250,
       "stock": 1,
       "image": "case-sam-a25-5g.webp"
     },
     {
       "name": "CASE SAM A70",
       "category": "Cases & Screen Protectors",
-      "price": 200,
       "stock": 1,
       "image": "case-sam-a70.webp"
     },
     {
       "name": "CASE SMART 20",
       "category": "Cases & Screen Protectors",
-      "price": 250,
       "stock": 1,
       "image": "case-smart-20.webp"
     },
     {
       "name": "CASE SMART 7",
       "category": "Cases & Screen Protectors",
-      "price": 250,
       "stock": 1,
       "image": "case-smart-7.webp"
     },
     {
       "name": "CASE SPARK GO3",
       "category": "Cases & Screen Protectors",
-      "price": 250,
       "stock": 4,
       "image": "case-spark-go3.webp"
     },
     {
       "name": "CASE Y02/Y02A",
       "category": "Cases & Screen Protectors",
-      "price": 200,
       "stock": 2,
       "image": "case-y02-y02a.webp"
     },
     {
       "name": "CASE Y11/Y17",
       "category": "Cases & Screen Protectors",
-      "price": 250,
       "stock": 1,
       "image": "case-y11-y17.webp"
     },
     {
       "name": "CASE Y15S/Y15A",
       "category": "Cases & Screen Protectors",
-      "price": 250,
       "stock": 3,
       "image": "case-y15s-y15a.webp"
     },
     {
       "name": "CASE Y17S",
       "category": "Cases & Screen Protectors",
-      "price": 200,
       "stock": 2,
       "image": "case-y17s.webp"
     },
     {
       "name": "CASE Y20i",
       "category": "Cases & Screen Protectors",
-      "price": 250,
       "stock": 1,
       "image": "case-y20i.webp"
     },
     {
       "name": "CASE Y91/Y95",
       "category": "Cases & Screen Protectors",
-      "price": 200,
       "stock": 1,
       "image": "case-y91-y95.webp"
     },
     {
       "name": "CASE Y91C",
       "category": "Cases & Screen Protectors",
-      "price": 250,
       "stock": 2,
       "image": "case-y91c.webp"
     },
     {
       "name": "TEMPERED C11",
       "category": "Cases & Screen Protectors",
-      "price": 200,
       "stock": 8,
       "image": "tempered-c11.webp"
     },
     {
       "name": "TEMPERED C11 FULL",
       "category": "Cases & Screen Protectors",
-      "price": 250,
       "stock": 1,
       "image": "tempered-c11-full.webp"
     },
     {
       "name": "TEMPERED HOT 10S",
       "category": "Cases & Screen Protectors",
-      "price": 200,
       "stock": 1,
       "image": "tempered-hot-10s.webp"
     },
     {
       "name": "TEMPERED HOT11S",
       "category": "Cases & Screen Protectors",
-      "price": 200,
       "stock": 3,
       "image": "tempered-hot11s.webp"
     },
     {
       "name": "TEMPERED REALME C100 FULL",
       "category": "Cases & Screen Protectors",
-      "price": 250,
       "stock": 1,
       "image": "tempered-realme-c100-full.webp"
     },
     {
       "name": "TEMPERED REALME CY21 FULL",
       "category": "Cases & Screen Protectors",
-      "price": 250,
       "stock": 4
     },
     {
       "name": "TEMPERED SMART 20",
       "category": "Cases & Screen Protectors",
-      "price": 200,
       "stock": 1,
       "image": "tempered-smart-20.webp"
     },
     {
       "name": "TEMPERED SPARK GO3",
       "category": "Cases & Screen Protectors",
-      "price": 200,
       "stock": 1,
       "image": "tempered-spark-go3.webp"
     },
     {
       "name": "TEMPERED Y11",
       "category": "Cases & Screen Protectors",
-      "price": 200,
       "stock": 5,
       "image": "tempered-y11.webp"
     },
     {
       "name": "TEMPERED Y20/Y20i",
       "category": "Cases & Screen Protectors",
-      "price": 200,
       "stock": 10,
       "image": "tempered-y20-y20i.webp"
     },
     {
       "name": "WIRE PROTECTOR",
       "category": "Cases & Screen Protectors",
-      "price": 25,
       "stock": 16,
       "image": "wire-protector.webp"
     },
     {
       "name": "CASE C25S",
       "category": "Cases & Screen Protectors",
-      "price": 200,
       "stock": 0
     },
     {
       "name": "CASE REALME C33",
       "category": "Cases & Screen Protectors",
-      "price": 200,
       "stock": 0
     },
     {
       "name": "CASE SMART 8",
       "category": "Cases & Screen Protectors",
-      "price": 250,
       "stock": 0
     },
     {
       "name": "CASE VI Y29 4G/T4X 5G",
       "category": "Cases & Screen Protectors",
-      "price": 250,
       "stock": 0
     },
     {
       "name": "TEMPERED SPARK GO1 FULL",
       "category": "Cases & Screen Protectors",
-      "price": 250,
       "stock": 0
     },
     {
       "name": "DITO WIFI",
       "category": "SIM & Load",
-      "price": 1990,
       "stock": 8,
       "image": "dito-wifi.webp"
     },
     {
       "name": "SIMCARD DITO",
       "category": "SIM & Load",
-      "price": 39,
       "stock": 101,
       "image": "simcard-dito.webp"
     },
     {
       "name": "SIMCARD GLOBE RETAILER",
       "category": "SIM & Load",
-      "price": 70,
       "stock": 1,
       "image": "simcard-globe-retailer.webp"
     },
     {
       "name": "SIMCARD SMART",
       "category": "SIM & Load",
-      "price": 55,
       "stock": 13,
       "image": "simcard-smart.webp"
     },
     {
       "name": "SIMCARD SMART RETAILER",
       "category": "SIM & Load",
-      "price": 399,
       "stock": 1,
       "image": "simcard-smart-retailer.webp"
     },
     {
       "name": "SIMCARD TM",
       "category": "SIM & Load",
-      "price": 49,
       "stock": 10,
       "image": "simcard-tm.webp"
     },
     {
       "name": "SIMCARD TNT",
       "category": "SIM & Load",
-      "price": 45,
       "stock": 18,
       "image": "simcard-tnt.webp"
     },
     {
       "name": "SIMCARD GLOBE",
       "category": "SIM & Load",
-      "price": 59,
       "stock": 0
     },
     {
       "name": "CARD READER USB 32N1",
       "category": "Memory & Storage",
-      "price": 150,
       "stock": 1,
       "image": "card-reader-usb-32n1.webp"
     },
     {
       "name": "SANDISK MEMORY CARD 32GB",
       "category": "Memory & Storage",
-      "price": 950,
       "stock": 1,
       "image": "sandisk-memory-card-32gb.webp"
     },
     {
       "name": "SANDISK MEMORY CARD 64GB",
       "category": "Memory & Storage",
-      "price": 1200,
       "stock": 2,
       "image": "sandisk-memory-card-64gb.webp"
     },
     {
       "name": "SANDISK USB 32GB",
       "category": "Memory & Storage",
-      "price": 950,
       "stock": 2,
       "image": "sandisk-usb-32gb.webp"
     },
     {
       "name": "SANDISK USB 64GB",
       "category": "Memory & Storage",
-      "price": 1200,
       "stock": 1,
       "image": "sandisk-usb-64gb.webp"
     },
     {
       "name": "SKONE MEMORY CARD 2GB",
       "category": "Memory & Storage",
-      "price": 280,
       "stock": 2,
       "image": "skone-memory-card-2gb.webp"
     },
     {
       "name": "SKONE MEMORY CARD 4GB",
       "category": "Memory & Storage",
-      "price": 480,
       "stock": 2,
       "image": "skone-memory-card-4gb.webp"
     },
     {
       "name": "S-43/124 BRACELET",
       "category": "Wearables",
-      "price": 80,
       "stock": 10,
       "image": "s-43-124-bracelet.webp"
     },
     {
       "name": "BOX MOUSE",
       "category": "Computer Accessories",
-      "price": 150,
       "stock": 5,
       "image": "box-mouse.webp"
     },
     {
       "name": "K1000 KEYBOARD",
       "category": "Computer Accessories",
-      "price": 350,
       "stock": 1,
       "image": "k1000-keyboard.webp"
     },
     {
       "name": "MOUSEPAD",
       "category": "Computer Accessories",
-      "price": 100,
       "stock": 3,
       "image": "mousepad.webp"
     },
     {
       "name": "MOUSEPAD G-1",
       "category": "Computer Accessories",
-      "price": 120,
       "stock": 1,
       "image": "mousepad-g-1.webp"
     },
     {
       "name": "MOUSEPAD H-2",
       "category": "Computer Accessories",
-      "price": 100,
       "stock": 1,
       "image": "mousepad-h-2.webp"
     },
     {
       "name": "BATTERY BL-4C",
       "category": "Batteries",
-      "price": 280,
       "stock": 3,
       "image": "battery-bl-4c.webp"
     },
     {
       "name": "BATTERY BL-4L",
       "category": "Batteries",
-      "price": 280,
       "stock": 2,
       "image": "battery-bl-4l.webp"
     },
     {
       "name": "BATTERY BL-5C",
       "category": "Batteries",
-      "price": 280,
       "stock": 1,
       "image": "battery-bl-5c.webp"
     },
     {
       "name": "CAR HOLDER",
       "category": "Accessories",
-      "price": 350,
       "stock": 2,
       "image": "car-holder.webp"
     },
     {
       "name": "G3 RING LIGHT PK15",
       "category": "Accessories",
-      "price": 480,
       "stock": 1,
       "image": "g3-ring-light-pk15.webp"
     },
     {
       "name": "MIC STAND",
       "category": "Accessories",
-      "price": 280,
       "stock": 2,
       "image": "mic-stand.webp"
     },
     {
       "name": "MOTOR PHONE HOLDER",
       "category": "Accessories",
-      "price": 350,
       "stock": 5,
       "image": "motor-phone-holder.webp"
     },
     {
       "name": "SELFIE STICK",
       "category": "Accessories",
-      "price": 250,
       "stock": 3,
       "image": "selfie-stick.webp"
     },
     {
       "name": "TRIPOD OCTOPOS",
       "category": "Accessories",
-      "price": 200,
       "stock": 2,
       "image": "tripod-octopos.webp"
     },
     {
       "name": "USB LIGHT",
       "category": "Accessories",
-      "price": 100,
       "stock": 2,
       "image": "usb-light.webp"
     }

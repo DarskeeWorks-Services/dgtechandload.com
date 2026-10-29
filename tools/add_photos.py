@@ -167,7 +167,7 @@ def main():
                 p['image'] = photo
             else:
                 p.pop('image', None)
-        CATALOG.write_text(json.dumps(catalog, ensure_ascii=False, indent=1) + '\n', encoding='utf8')
+        CATALOG.write_text(json.dumps(catalog, ensure_ascii=False, indent=2) + '\n', encoding='utf8')
     write_checklist(products if not dry else [dict(p, image=p.get('image')) for p in products])
 
     print(('[dry run] ' if dry else '') + f'{len(added)} photo(s) matched, {len(unmatched)} not matched.')
